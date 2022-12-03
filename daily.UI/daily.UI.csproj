@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\wpf.learning.application\wpf.learning.application.csproj" />
-    <ProjectReference Include="..\wpf.learning.IoC\wpf.learning.IoC.csproj" />
+    <ProjectReference Include="..\daily.application\daily.application.csproj" />
+    <ProjectReference Include="..\daily.IoC\daily.IoC.csproj" />
   </ItemGroup>
 
 </Project>
