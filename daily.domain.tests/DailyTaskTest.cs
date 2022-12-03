@@ -1,4 +1,4 @@
-using daily.domain.Models;
+using daily.domain.Models.Daily;
 using NUnit.Framework;
 using System;
 

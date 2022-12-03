@@ -1,31 +1,29 @@
-﻿using daily.application.Models;
-using daily.application.Service;
+﻿using daily.application.Services;
+using daily.domain.Models.Daily;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace daily.UI.ViewsModel.MainView
+namespace daily.UI.ViewsModel.Journey
 {
-    public class MainViewModel : INotifyPropertyChanged
+    internal class JourneyModel
     {
-        private IDataServices _dataService;
-        public int MyProperty { get; set; }
+        private IDailyServices _dailyService;
 
         public ICommand _addCommand;
-        public ICommand AddCommand  { get => _addCommand; }
+        public ICommand AddCommand { get => _addCommand; }
         public ICommand _deleteCommand;
         public ICommand DeleteCommand { get => _deleteCommand; }
 
-        public MainViewModel(IDataServices dataService)
+        public JourneyModel(IDailyServices dailyService)
         {
-            _dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
+            _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
 
             _addCommand = new AddCommand();
             _deleteCommand = new DeleteCommand();
 
-            DataDetails = new ObservableCollection<DataDetail>(_dataService.GetDataDetails());
+            _dataDetail = _dailyService.Get();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -34,10 +32,9 @@ namespace daily.UI.ViewsModel.MainView
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public ObservableCollection<DataDetail> DataDetails { get; set; }
 
-        private DataDetail _dataDetail;
-        public DataDetail DataDetail
+        private DailyTask _dataDetail;
+        public DailyTask DataDetail
         {
             get => _dataDetail;
             set

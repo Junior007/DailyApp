@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace daily.learning.application.Models
+namespace daily.application.Models
 {
     public class DataDetail
     {

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using daily.learning.application.Models;
+using daily.application.Models;
+using daily.application.Service;
 
-namespace daily.learning.application.Service
+namespace daily.application.Service
 {
-    public class DataService : IDataService
+    public class DataServices : IDataServices
     {
         public IEnumerable<DataDetail> GetDataDetails()
         {
@@ -17,7 +18,6 @@ namespace daily.learning.application.Service
 
             return dataDetails;
         }
-
 
     }
 }

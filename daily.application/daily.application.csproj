@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\daily.DAL\daily.DAL.csproj" />
+    <ProjectReference Include="..\daily.domain\daily.domain.csproj" />
+  </ItemGroup>
+
 </Project>
