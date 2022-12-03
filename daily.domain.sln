@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32210.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "daily.domain", "daily.domain\daily.domain.csproj", "{CFD9EBD5-48C1-430E-A76F-E88796521474}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "daily.domain.tests", "daily.domain.tests\daily.domain.tests.csproj", "{FED527EC-C502-46CD-B9CE-AD5FC5638393}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFD9EBD5-48C1-430E-A76F-E88796521474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFD9EBD5-48C1-430E-A76F-E88796521474}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFD9EBD5-48C1-430E-A76F-E88796521474}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFD9EBD5-48C1-430E-A76F-E88796521474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FED527EC-C502-46CD-B9CE-AD5FC5638393}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FED527EC-C502-46CD-B9CE-AD5FC5638393}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FED527EC-C502-46CD-B9CE-AD5FC5638393}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FED527EC-C502-46CD-B9CE-AD5FC5638393}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1E15AB2-EAC1-40C6-8A2B-CCD8665C9D07}
+	EndGlobalSection
+EndGlobal

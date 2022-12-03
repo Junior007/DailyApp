@@ -1,7 +1,6 @@
+using daily.domain.Models;
 using NUnit.Framework;
-using Daily;
 using System;
-using System.Threading;
 
 namespace Tests
 {
