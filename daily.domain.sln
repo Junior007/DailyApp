@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "daily.application", "daily.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "daily.IoC", "daily.IoC\daily.IoC.csproj", "{F93BAEB3-1AD2-4AAD-9D98-8C459E72C6A4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "daily.DAL", "daily.DAL\daily.DAL.csproj", "{65F0339F-21AD-4E9F-B1AE-54B03D1A65C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{F93BAEB3-1AD2-4AAD-9D98-8C459E72C6A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F93BAEB3-1AD2-4AAD-9D98-8C459E72C6A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F93BAEB3-1AD2-4AAD-9D98-8C459E72C6A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65F0339F-21AD-4E9F-B1AE-54B03D1A65C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65F0339F-21AD-4E9F-B1AE-54B03D1A65C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65F0339F-21AD-4E9F-B1AE-54B03D1A65C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65F0339F-21AD-4E9F-B1AE-54B03D1A65C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
