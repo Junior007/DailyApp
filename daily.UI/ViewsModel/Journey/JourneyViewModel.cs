@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace daily.UI.ViewsModel.Journey
 {
-    internal class JourneyModel
+    internal class JourneyViewModel : INotifyPropertyChanged
     {
         private IDailyServices _dailyService;
 
@@ -16,7 +16,7 @@ namespace daily.UI.ViewsModel.Journey
         public ICommand _deleteCommand;
         public ICommand DeleteCommand { get => _deleteCommand; }
 
-        public JourneyModel(IDailyServices dailyService)
+        public JourneyViewModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
 
