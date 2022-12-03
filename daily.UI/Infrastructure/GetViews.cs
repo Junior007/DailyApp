@@ -16,7 +16,7 @@ namespace daily.Infrastructure
             {
                 var type = typeof(INotifyPropertyChanged);
 
-                Assembly assembly = Assembly.GetExecutingAssembly();
+                Assembly assembly = Assembly.GetAssembly(typeof(GetViews));
                 _views = assembly
                     .GetTypes()
                     .Where(types => types.Name != type.Name && types.IsAssignableTo(type));
