@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace wpf.learning.Infrastructure
+namespace daily.Infrastructure
 {
     internal class GetViews
     {

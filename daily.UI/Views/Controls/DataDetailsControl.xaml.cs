@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MyWpfProject.Views.Controls
+namespace Daily.UI.Views.Controls
 {
     /// <summary>
     /// Lógica de interacción para Control1.xaml

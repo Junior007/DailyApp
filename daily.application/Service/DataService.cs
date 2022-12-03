@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using wpf.learning.application.Models;
+using daily.learning.application.Models;
 
-namespace wpf.learning.application.Service
+namespace daily.learning.application.Service
 {
     public class DataService : IDataService
     {

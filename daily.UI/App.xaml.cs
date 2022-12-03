@@ -1,13 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using wpf.learning.Infrastructure;
-using MyWpfProject.Views;
+﻿using daily.Infrastructure;
+using daily.IoC;
+using Microsoft.Extensions.DependencyInjection;
+using daily.UI.Views;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Windows;
-using wpf.learning.IoC;
 
-namespace MyWpfProject
+namespace daily.UI
 {
     public partial class App : Application
     {

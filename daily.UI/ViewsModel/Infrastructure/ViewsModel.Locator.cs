@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using wpf.learning.Infrastructure;
-using wpf.learning.IoC;
-
-namespace MyWpfProject.ViewsModel.Infrastructure
+using daily.Infrastructure;
+using daily.IoC;
+namespace daily.UI.ViewsModel.Infrastructure
 {
     public static class Locator
     {
-
-
-
-        
+       
         public static bool GetIsAutomaticLocator(DependencyObject obj)
         {
             return (bool)obj.GetValue(IsAutomaticLocatorProperty);

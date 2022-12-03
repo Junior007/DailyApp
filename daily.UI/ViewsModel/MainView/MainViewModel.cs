@@ -7,10 +7,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using wpf.learning.application.Models;
-using wpf.learning.application.Service;
+using daily.learning.application.Models;
+using daily.learning.application.Service;
 
-namespace MyWpfProject.ViewsModel.MainView
+namespace daily.UI.ViewsModel.MainView
 {
     public class MainViewModel : INotifyPropertyChanged
     {

@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace MyWpfProject.ViewsModel.MainView
+namespace daily.UI.ViewsModel.MainView
 {
 
 

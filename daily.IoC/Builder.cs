@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace wpf.learning.IoC
+namespace daily.IoC
 {
     public class Builder
     {

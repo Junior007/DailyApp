@@ -1,4 +1,4 @@
-﻿namespace wpf.learning.DAL
+﻿namespace daily.learning.DAL
 {
     public class Class1
     {

@@ -1,12 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using wpf.learning.application.Service;
+﻿using daily.learning.application.Service;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace wpf.learning.IoC
+namespace daily.IoC
 {
     public class SetterServicesBuilder
     {
