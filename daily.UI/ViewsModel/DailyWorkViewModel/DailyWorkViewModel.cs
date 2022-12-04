@@ -1,12 +1,12 @@
 ﻿using daily.application.Services;
 using daily.domain.Models.Daily;
-using daily.UI.ViewsModel.DailyWork.Commands;
+using daily.UI.ViewsModel.DailyWorkViewModel.Commands;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace daily.UI.ViewsModel.DailyWork
+namespace daily.UI.ViewsModel.DailyWorkViewModel
 {
     internal class DailyWorkViewModel : INotifyPropertyChanged
     {

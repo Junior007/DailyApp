@@ -5,7 +5,7 @@ using daily.Infrastructure;
 using daily.IoC;
 namespace daily.UI.ViewsModel.Infrastructure
 {
-    public static class Locator
+    internal static class Locator
     {
        
         public static bool GetIsAutomaticLocator(DependencyObject obj)

@@ -1,4 +1,4 @@
-﻿using daily.UI.ViewsModel.DailyWork;
+﻿using daily.UI.ViewsModel.DailyWorkViewModel;
 using System;
 using System.Windows;
 using System.Windows.Controls;

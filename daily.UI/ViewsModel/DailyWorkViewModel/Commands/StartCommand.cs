@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace daily.UI.ViewsModel.DailyWork.Commands
+namespace daily.UI.ViewsModel.DailyWorkViewModel.Commands
 {
     public class StartCommand : ICommand
     {

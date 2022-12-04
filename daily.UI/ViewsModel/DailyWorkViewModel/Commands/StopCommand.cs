@@ -2,15 +2,16 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace daily.UI.ViewsModel.DailyWork.Commands
+namespace daily.UI.ViewsModel.DailyWorkViewModel.Commands
 {
-    public class DeleteCommand : ICommand
+    public class StopCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
+
         public bool CanExecute(object parameter)
         {
             return true;
@@ -19,7 +20,7 @@ namespace daily.UI.ViewsModel.DailyWork.Commands
         public void Execute(object parameter)
         {
             //DataDetail data = parameter as DataDetail;
-            MessageBoxResult result = MessageBox.Show("DeleteCommand Hello MessageBox");
+            MessageBoxResult result = MessageBox.Show("StopCommand Hello MessageBox");
         }
     }
 }
