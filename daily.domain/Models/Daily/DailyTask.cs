@@ -5,8 +5,8 @@
         internal delegate void TaskStartEventHandler(object sender, DailyTaskStartEventArgs e);
         internal event TaskStartEventHandler TaskStartEvent;
 
-        public string Title { get; private set; }
-        public string Description { get; private set; }
+        public string Title { get;  set; }
+        public string Description { get;  set; }
         public List<Interval> Intervals { get; private set; }
         public List<DailyTask> SubTasks { get; private set; }
         public bool IsRunning => HasIntervals && Intervals.Any(i => i.IsOpen);
