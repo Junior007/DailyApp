@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="daily.UI.Views.Controls.DailyTaskDetail"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="205.932" d:DesignWidth="756.757">
+
+
+    <Grid Margin="0,0,0,103"  DataContext="{Binding DailyTask}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition  Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Title}" Grid.Column="0"  Grid.Row="0" Margin="1"></TextBlock>
+        <TextBox  Grid.Column="1" Grid.Row="0" 
+                Text="{Binding Description}"
+                AcceptsReturn="True"
+                FontSize="14"/>
+        <ListView 
+                ItemsSource="{Binding SubTasks}"
+                Grid.Column="0" Grid.Row="0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition  Width="150"></ColumnDefinition>
+                            <ColumnDefinition  Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Title}" Grid.Column="0" Margin="1"></TextBlock>
+                        <TextBox    Grid.Column="1"
+                                        Text="{Binding Description}" 
+                                        Margin="0,0,20,0"
+                                        AcceptsReturn="True"
+                                        FontSize="14"/>
+                    </Grid>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+
+</UserControl>
