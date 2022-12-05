@@ -19,7 +19,7 @@ namespace daily.UI
         {
             IEnumerable<Type> viewTypes = GetViews.Types();
             ServiceProvider serviceProvider = DependencyBuilder
-                .SetMainView<DailyWorkView>()
+                .SetMainView<MainView>()
                 .SetViews(viewTypes)
                 .SetServices()
                 .Build();
@@ -28,7 +28,7 @@ namespace daily.UI
             //mainWindow.Show();
 
 
-            var startWindow = serviceProvider.GetService<DailyWorkView>();
+            var startWindow = serviceProvider.GetService<MainView>();
             startWindow.Show();
 
         }

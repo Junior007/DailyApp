@@ -5,9 +5,9 @@ namespace daily.UI.Views
     /// <summary>
     /// Lógica de interacción para JurneyView.xaml
     /// </summary>
-    public partial class DailyWorkView : Window
+    public partial class MainView : Window
     {
-        public DailyWorkView()
+        public MainView()
         {
             InitializeComponent();
         }

@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace daily.UI.ViewsModel
 {
-    internal class DailyWorkViewModel : AbstractViewModel
+    internal class MainViewModel : AbstractViewModel
     {
         public DailyTask DailyWork
         {
@@ -34,7 +34,7 @@ namespace daily.UI.ViewsModel
 
         private IDailyServices _dailyService;
         private StackPanel stakPanelContainer;
-        public DailyWorkViewModel(IDailyServices dailyService)
+        public MainViewModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
 
