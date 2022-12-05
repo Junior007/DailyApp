@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace daily.UI.ViewsModel
 {
-    internal class DailyWorkViewModel : INotifyPropertyChanged
+    internal class DailyWorkViewModel :AbstractViewModel
     {
         public DailyTask DailyWork
         {
@@ -44,14 +44,10 @@ namespace daily.UI.ViewsModel
             _stopCommand = new StopCommand();
 
             DailyWork = _dailyService.Get();
+
+
+
+            var a = OwnerView;
         }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
     }
 }

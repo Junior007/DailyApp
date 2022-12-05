@@ -7,9 +7,8 @@ using System.Windows.Input;
 
 namespace daily.UI.ViewsModel
 {
-    internal class DailyTaskDetailModel : INotifyPropertyChanged
+    internal class DailyTaskDetailModel : AbstractViewModel
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         public string Title
         {
@@ -53,10 +52,7 @@ namespace daily.UI.ViewsModel
             Title = daily.Title;
             Description = daily.Description;
         }
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+
 
     }
 }

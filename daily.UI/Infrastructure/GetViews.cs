@@ -1,6 +1,6 @@
-﻿using System;
+﻿using daily.UI.ViewsModel;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
@@ -14,7 +14,7 @@ namespace daily.Infrastructure
         {
             if (_views == null)
             {
-                var type = typeof(INotifyPropertyChanged);
+                var type = typeof(AbstractViewModel);
 
                 Assembly assembly = Assembly.GetAssembly(typeof(GetViews));
                 _views = assembly

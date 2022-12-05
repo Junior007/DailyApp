@@ -3,6 +3,8 @@ using System.Linq;
 using System.Windows;
 using daily.Infrastructure;
 using daily.IoC;
+using daily.UI.ViewsModel;
+
 namespace daily.UI.Infrastructure
 {
     internal static class Locator
@@ -21,10 +23,11 @@ namespace daily.UI.Infrastructure
         public static readonly DependencyProperty IsAutomaticLocatorProperty = DependencyProperty.RegisterAttached("IsAutomaticLocator", typeof(bool), typeof(Locator), new PropertyMetadata(false, IsAutomaticLocatorChanged));
         private static void IsAutomaticLocatorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var callOwner = d as FrameworkElement;
-            var className = GetViewModelClassName(d);
-            var userControl = GetInstanceOf(callOwner.GetType(), className);
-            callOwner.DataContext = userControl;
+            FrameworkElement ownerView = d as FrameworkElement;
+            string className = GetViewModelClassName(d);
+            AbstractViewModel viewModel = GetInstanceOf(ownerView.GetType(), className);
+            viewModel.OwnerView = ownerView;
+            ownerView.DataContext = viewModel;
         }
         public static string GetViewModelClassName(DependencyObject obj)
         {
@@ -36,13 +39,13 @@ namespace daily.UI.Infrastructure
         }
         public static readonly DependencyProperty ViewModelClassNameProperty = DependencyProperty.RegisterAttached("ViewModelClassName", typeof(string), typeof(Locator), new PropertyMetadata(null));
 
-        private static object GetInstanceOf(Type dependencyPropertyType, string className)
+        private static AbstractViewModel GetInstanceOf(Type dependencyPropertyType, string className)
         {
             var viewModelName = GetClassName(dependencyPropertyType, className);
 
             Type? viewModel = GetViews.Types().FirstOrDefault(t => t.Name == viewModelName);
 
-            var result = DependencyBuilder.ServiceProvider.GetService(viewModel);
+            AbstractViewModel result = DependencyBuilder.ServiceProvider.GetService(viewModel) as AbstractViewModel;
             return result;
         }
 

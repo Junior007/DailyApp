@@ -16,7 +16,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Name="UserControl">
+            <TextBlock>Aquí se ha de cargar</TextBlock>
             <uc:DailyTaskDetail></uc:DailyTaskDetail>
         </StackPanel>
 
