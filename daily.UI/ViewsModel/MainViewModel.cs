@@ -51,12 +51,15 @@ namespace daily.UI.ViewsModel
 
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
+            DailyTaskDetail dailyTaskDetail = new DailyTaskDetail();
             FrameworkElement view = sender as FrameworkElement;
-
             stakPanelContainer = view?.FindName("StackPanel") as StackPanel;
-
             stakPanelContainer.Children.Clear();
-            stakPanelContainer.Children.Add(new DailyTaskDetail());
+            stakPanelContainer.Children.Add(dailyTaskDetail);
+
+            DailyTaskDetailModel dataContext = dailyTaskDetail.DataContext as DailyTaskDetailModel;
+
+            dataContext.DailyTask = _dailyService.Get();
         }
     }
 }

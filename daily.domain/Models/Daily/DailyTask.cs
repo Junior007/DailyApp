@@ -18,7 +18,7 @@
             Description = description;
         }
 
-        private DailyTask()
+        public DailyTask()
         {
             Intervals = new List<Interval>();
             SubTasks = new List<DailyTask>();
