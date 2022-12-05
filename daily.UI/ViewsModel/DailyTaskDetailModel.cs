@@ -53,6 +53,9 @@ namespace daily.UI.ViewsModel
             Description = daily.Description;
         }
 
-
+        protected override void OnSetOwnerView()
+        {
+            var chekOwnerView = OwnerView;
+        }
     }
 }

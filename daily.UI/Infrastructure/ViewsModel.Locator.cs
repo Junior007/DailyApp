@@ -24,8 +24,8 @@ namespace daily.UI.Infrastructure
         private static void IsAutomaticLocatorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement ownerView = d as FrameworkElement;
-            string className = GetViewModelClassName(d);
-            AbstractViewModel viewModel = GetInstanceOf(ownerView.GetType(), className);
+            string viewModelClassName = GetViewModelClassName(d);
+            AbstractViewModel viewModel = GetInstanceOf(ownerView.GetType(), viewModelClassName);
             viewModel.OwnerView = ownerView;
             ownerView.DataContext = viewModel;
         }

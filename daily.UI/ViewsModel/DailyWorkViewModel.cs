@@ -4,6 +4,8 @@ using daily.UI.Commands;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace daily.UI.ViewsModel
@@ -44,10 +46,14 @@ namespace daily.UI.ViewsModel
             _stopCommand = new StopCommand();
 
             DailyWork = _dailyService.Get();
+        }
 
-
-
-            var a = OwnerView;
+        protected override void OnSetOwnerView()
+        {
+            var chekOwnerView = OwnerView;
+            object element;
+            chekOwnerView.ApplyTemplate();
+            StackPanel container = chekOwnerView.FindName("MainStackPanel") as StackPanel;
         }
     }
 }

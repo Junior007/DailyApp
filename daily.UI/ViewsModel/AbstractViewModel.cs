@@ -6,7 +6,19 @@ namespace daily.UI.ViewsModel
 {
     internal abstract class AbstractViewModel : INotifyPropertyChanged
     {
-        internal FrameworkElement OwnerView { get; set; }
+
+        protected FrameworkElement _ownerView { get; set; }
+        internal FrameworkElement OwnerView
+        {
+            get => _ownerView;
+            set
+            {
+                _ownerView = value;
+                OnSetOwnerView();
+            }
+        }
+
+        protected abstract void OnSetOwnerView();
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
