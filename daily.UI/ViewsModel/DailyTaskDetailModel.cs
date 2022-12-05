@@ -1,21 +1,31 @@
 ﻿using daily.application.Services;
 using daily.domain.Models.Daily;
-using daily.UI.ViewsModel.DailyWorkViewModel.Commands;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace daily.UI.ViewsModel.DailyWorkViewModel
+namespace daily.UI.ViewsModel
 {
-    internal class DailyWorkViewModel : INotifyPropertyChanged
+    internal class DailyTaskDetailModel : INotifyPropertyChanged
     {
-        public DailyTask DailyWork
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public string Title
         {
-            get => _dailyWork;
+            get => _title;
             set
             {
-                _dailyWork = value;
+                _title = value;
+                OnPropertyChanged();
+            }
+        }
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                _description = value;
                 OnPropertyChanged();
             }
         }
@@ -25,30 +35,24 @@ namespace daily.UI.ViewsModel.DailyWorkViewModel
         public ICommand StartCommand { get => _startCommand; }
         public ICommand StopCommand { get => _stopCommand; }
 
-        private DailyTask _dailyWork;
-
         private ICommand _addCommand;
         private ICommand _deleteCommand;
         private ICommand _startCommand;
         private ICommand _stopCommand;
 
+        private string _title;
+        private string _description;
+
         private IDailyServices _dailyService;
 
-
-        public DailyWorkViewModel(IDailyServices dailyService)
+        public DailyTaskDetailModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
 
-            _addCommand = new AddCommand();
-            _deleteCommand = new DeleteCommand();
-            _startCommand = new StartCommand();
-            _stopCommand = new StopCommand();
-
-            DailyWork = _dailyService.Get();
+            DailyTask daily = _dailyService.Get();
+            Title = daily.Title;
+            Description = daily.Description;
         }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

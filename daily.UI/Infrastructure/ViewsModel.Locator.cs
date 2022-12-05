@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows;
 using daily.Infrastructure;
 using daily.IoC;
-namespace daily.UI.ViewsModel.Infrastructure
+namespace daily.UI.Infrastructure
 {
     internal static class Locator
     {

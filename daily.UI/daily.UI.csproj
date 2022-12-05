@@ -26,4 +26,8 @@
     <ProjectReference Include="..\daily.IoC\daily.IoC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewsModel\Infrastructure\" />
+  </ItemGroup>
+
 </Project>

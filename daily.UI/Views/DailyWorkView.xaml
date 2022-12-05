@@ -3,8 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm ="clr-namespace:daily.UI.ViewsModel.Infrastructure"
+        xmlns:vm ="clr-namespace:daily.UI.Infrastructure"
         vm:Locator.IsAutomaticLocator="True"
+
+        xmlns:uc="clr-namespace:daily.UI.Views.Controls"
+
         mc:Ignorable="d"
         Title="Daily Tasks" Height="450" Width="800">
     <Grid  DataContext="{Binding DailyWork}">
@@ -14,17 +17,17 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Button Content="Add" Command="{Binding AddCommand}">
-            </Button>
-            <Button Content="Delete" Command="{Binding DeleteCommand}"></Button>
+            <uc:DailyTaskDetail></uc:DailyTaskDetail>
         </StackPanel>
 
         <Grid Grid.Row="1">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition  Width="150"></ColumnDefinition>
                 <ColumnDefinition  Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="100"></RowDefinition>
                 <RowDefinition Height="100"></RowDefinition>
                 <RowDefinition Height="100"></RowDefinition>
             </Grid.RowDefinitions>

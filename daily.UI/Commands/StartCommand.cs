@@ -2,9 +2,9 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace daily.UI.ViewsModel.DailyWorkViewModel.Commands
+namespace daily.UI.Commands
 {
-    public class StopCommand : ICommand
+    public class StartCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {
@@ -20,7 +20,7 @@ namespace daily.UI.ViewsModel.DailyWorkViewModel.Commands
         public void Execute(object parameter)
         {
             //DataDetail data = parameter as DataDetail;
-            MessageBoxResult result = MessageBox.Show("StopCommand Hello MessageBox");
+            MessageBoxResult result = MessageBox.Show("StartCommand Hello MessageBox");
         }
     }
 }
