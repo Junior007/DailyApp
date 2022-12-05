@@ -7,14 +7,14 @@ namespace daily.IoC
         private static Container _container;
 
         public static IServiceProvider ServiceProvider { get => _container.SrvcProvider; }
-        public static SetterViewsBuilder SetMainView<T>() where T : class
+        public static SetterViewModelsBuilder SetMainView<T>() where T : class
         {
             ServiceCollection services = new ServiceCollection();
             services.AddSingleton<T>();
 
             _container = new Container(services);
 
-            return new SetterViewsBuilder(_container);
+            return new SetterViewModelsBuilder(_container);
         }
     }
 }

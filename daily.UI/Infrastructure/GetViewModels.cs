@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace daily.Infrastructure
 {
-    internal class GetViews
+    internal class GetViewModels
     {
         private static IEnumerable<Type> _views;
 
@@ -16,7 +16,7 @@ namespace daily.Infrastructure
             {
                 var type = typeof(AbstractViewModel);
 
-                Assembly assembly = Assembly.GetAssembly(typeof(GetViews));
+                Assembly assembly = Assembly.GetAssembly(typeof(GetViewModels));
                 _views = assembly
                     .GetTypes()
                     .Where(types => types.Name != type.Name && types.IsAssignableTo(type));

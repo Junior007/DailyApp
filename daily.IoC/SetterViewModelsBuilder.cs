@@ -2,17 +2,17 @@
 
 namespace daily.IoC
 {
-    public class SetterViewsBuilder
+    public class SetterViewModelsBuilder
     {
         private Container _container;
 
-        private SetterViewsBuilder() { }
-        internal SetterViewsBuilder(Container container)
+        private SetterViewModelsBuilder() { }
+        internal SetterViewModelsBuilder(Container container)
         {
             _container = container;
         }
 
-        public SetterServicesBuilder SetViews(IEnumerable<Type> viewTypes)
+        public SetterServicesBuilder SetViewModels(IEnumerable<Type> viewTypes)
         {
             foreach (var viewType in viewTypes)
             {

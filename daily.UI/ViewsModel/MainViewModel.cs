@@ -1,6 +1,7 @@
 ﻿using daily.application.Services;
 using daily.domain.Models.Daily;
 using daily.UI.Commands;
+using daily.UI.Views.Controls;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,6 +35,8 @@ namespace daily.UI.ViewsModel
 
         private IDailyServices _dailyService;
         private StackPanel stakPanelContainer;
+
+
         public MainViewModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
@@ -52,7 +55,8 @@ namespace daily.UI.ViewsModel
 
             stakPanelContainer = view?.FindName("StackPanel") as StackPanel;
 
-            //Cargar control de usuario si existe tareas
+            stakPanelContainer.Children.Clear();
+            stakPanelContainer.Children.Add(new DailyTaskDetail());
         }
     }
 }

@@ -43,7 +43,7 @@ namespace daily.UI.Infrastructure
         {
             var viewModelName = GetClassName(dependencyPropertyType, className);
 
-            Type? viewModel = GetViews.Types().FirstOrDefault(t => t.Name == viewModelName);
+            Type? viewModel = GetViewModels.Types().FirstOrDefault(t => t.Name == viewModelName);
 
             AbstractViewModel result = DependencyBuilder.ServiceProvider.GetService(viewModel) as AbstractViewModel;
             return result;
