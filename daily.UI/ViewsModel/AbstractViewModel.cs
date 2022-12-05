@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -14,11 +15,15 @@ namespace daily.UI.ViewsModel
             set
             {
                 _ownerView = value;
-                OnSetOwnerView();
+                _ownerView.Loaded+=OnLoaded;
             }
         }
 
-        protected abstract void OnSetOwnerView();
+        protected virtual void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

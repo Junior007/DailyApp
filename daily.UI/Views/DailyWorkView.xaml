@@ -7,18 +7,16 @@
         vm:Locator.IsAutomaticLocator="True"
 
         xmlns:uc="clr-namespace:daily.UI.Views.Controls"
-
         mc:Ignorable="d"
         Title="Daily Tasks" Height="450" Width="800">
-    <Grid  DataContext="{Binding DailyWork}">
+    <Grid  DataContext="{Binding DailyWork}" x:Name="Grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="34"></RowDefinition>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Name="MainStackPanel">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Name="StackPanel">
             <TextBlock>Aquí se ha de cargar</TextBlock>
-            <uc:DailyTaskDetail></uc:DailyTaskDetail>
         </StackPanel>
 
         <Grid Grid.Row="1">

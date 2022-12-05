@@ -2,15 +2,13 @@
 using daily.domain.Models.Daily;
 using daily.UI.Commands;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace daily.UI.ViewsModel
 {
-    internal class DailyWorkViewModel :AbstractViewModel
+    internal class DailyWorkViewModel : AbstractViewModel
     {
         public DailyTask DailyWork
         {
@@ -35,7 +33,7 @@ namespace daily.UI.ViewsModel
         private ICommand _stopCommand;
 
         private IDailyServices _dailyService;
-
+        private StackPanel stakPanelContainer;
         public DailyWorkViewModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
@@ -48,12 +46,13 @@ namespace daily.UI.ViewsModel
             DailyWork = _dailyService.Get();
         }
 
-        protected override void OnSetOwnerView()
+        protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var chekOwnerView = OwnerView;
-            object element;
-            chekOwnerView.ApplyTemplate();
-            StackPanel container = chekOwnerView.FindName("MainStackPanel") as StackPanel;
+            FrameworkElement view = sender as FrameworkElement;
+
+            stakPanelContainer = view?.FindName("StackPanel") as StackPanel;
+
+            //Cargar control de usuario si existe tareas
         }
     }
 }
