@@ -10,6 +10,10 @@
         mc:Ignorable="d"
         Title="Daily Tasks" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="800"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
         <StackPanel Orientation="Horizontal" Name="Container">
         </StackPanel>
     </Grid>
