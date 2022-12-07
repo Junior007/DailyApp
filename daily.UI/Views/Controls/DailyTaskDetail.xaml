@@ -27,12 +27,13 @@
         </StackPanel>
 
 
-        <ListView Name="ListViewContainer">
-            <ListBox.ItemTemplate>
+
+        <ListView Name="ListViewContainer"  Grid.Row="1">
+            <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ContentControl/>
+                    <uc:DailyTaskDetail/>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
+            </ListView.ItemTemplate>
         </ListView>
 
     </Grid>

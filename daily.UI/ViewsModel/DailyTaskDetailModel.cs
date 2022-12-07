@@ -72,6 +72,7 @@ namespace daily.UI.ViewsModel
                 foreach (var task in DailyTask.SubTasks)
                 {
                     DailyTaskDetail ucDailyTaskDetail = new DailyTaskDetail();
+
                     listViewContainer.Items.Add(ucDailyTaskDetail);
 
                     DailyTaskDetailModel ucModelView = ucDailyTaskDetail.DataContext as DailyTaskDetailModel;
