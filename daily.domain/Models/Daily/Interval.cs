@@ -1,4 +1,4 @@
-﻿namespace Daily
+﻿namespace daily.domain.Models.Daily
 {
     public class Interval
     {
