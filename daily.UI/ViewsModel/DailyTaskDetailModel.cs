@@ -6,20 +6,23 @@ namespace daily.UI.ViewsModel
 {
     internal class DailyTaskDetailModel : AbstractViewModel
     {
+
         public string Title
         {
-            get => _dailyTask.Title;
+            get => _title;
             set
             {
+                _title = value;
                 _dailyTask.Title = value;
                 OnPropertyChanged();
             }
         }
         public string Description
         {
-            get => _dailyTask.Description;
+            get => _description;
             set
             {
+                _description = value;
                 _dailyTask.Description = value;
                 OnPropertyChanged();
             }
@@ -27,10 +30,24 @@ namespace daily.UI.ViewsModel
         public DailyTask DailyTask
         {
             private get => _dailyTask;
-            set { _dailyTask = value; }
+            set {
+                SetDailyTask(value);
+            }
+        }
+
+        private void SetDailyTask(DailyTask value)
+        {
+            _dailyTask = value;
+            _title = _dailyTask.Title;
+            _description = _dailyTask.Description;
+            OnPropertyChanged(nameof(Title));
+            OnPropertyChanged(nameof(Description));
+
         }
 
         private DailyTask _dailyTask;
+        private string _title;
+        private string _description;
 
         private IDailyServices _dailyService;
 
@@ -38,8 +55,7 @@ namespace daily.UI.ViewsModel
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
 
-            _dailyTask = new DailyTask();
-        }
+       }
 
     }
 }

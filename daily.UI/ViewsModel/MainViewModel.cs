@@ -57,9 +57,9 @@ namespace daily.UI.ViewsModel
             stakPanelContainer.Children.Clear();
             stakPanelContainer.Children.Add(dailyTaskDetail);
 
-            DailyTaskDetailModel dataContext = dailyTaskDetail.DataContext as DailyTaskDetailModel;
+            DailyTaskDetailModel ucModelView = dailyTaskDetail.DataContext as DailyTaskDetailModel;
 
-            dataContext.DailyTask = _dailyService.Get();
+            ucModelView.DailyTask = _dailyService.Get();
         }
     }
 }

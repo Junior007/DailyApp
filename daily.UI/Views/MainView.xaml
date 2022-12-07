@@ -10,54 +10,13 @@
         mc:Ignorable="d"
         Title="Daily Tasks" Height="450" Width="800">
     <Grid  DataContext="{Binding DailyWork}" x:Name="Grid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="34"></RowDefinition>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
 
+        </Grid.ColumnDefinitions>
+        
         <StackPanel Orientation="Horizontal" Grid.Row="0" Name="StackPanel">
-            <TextBlock>Aquí se ha de cargar</TextBlock>
         </StackPanel>
-
-        <Grid Grid.Row="1">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition  Width="150"></ColumnDefinition>
-                <ColumnDefinition  Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100"></RowDefinition>
-                <RowDefinition Height="100"></RowDefinition>
-                <RowDefinition Height="100"></RowDefinition>
-            </Grid.RowDefinitions>
-            <TextBlock Text="{Binding Title}" Grid.Column="0"  Grid.Row="0" Margin="1"></TextBlock>
-            <TextBox  Grid.Column="1" Grid.Row="0" 
-                Text="{Binding Description}" 
-                Margin="0,0,20,0"
-                AcceptsReturn="True"
-                FontSize="14"/>
-            <ListView 
-                ItemsSource="{Binding SubTasks}"
-                Grid.Column="1" Grid.Row="1" 
-                >
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition  Width="150"></ColumnDefinition>
-                                <ColumnDefinition  Width="*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Title}" Grid.Column="0" Margin="1"></TextBlock>
-                            <TextBox    Grid.Column="1"
-                                        Text="{Binding Description}" 
-                                        Margin="0,0,20,0"
-                                        AcceptsReturn="True"
-                                        FontSize="14"/>
-                        </Grid>
-
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+        
     </Grid>
 </Window>
