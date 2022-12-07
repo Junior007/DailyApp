@@ -1,6 +1,10 @@
 ﻿using daily.application.Services;
 using daily.domain.Models.Daily;
+using daily.UI.Views.Controls;
 using System;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace daily.UI.ViewsModel
 {
@@ -27,11 +31,53 @@ namespace daily.UI.ViewsModel
                 OnPropertyChanged();
             }
         }
+        public ObservableCollection<DailyTask> SubTasks
+        {
+            get;
+            set;
+        }
+
         public DailyTask DailyTask
         {
             private get => _dailyTask;
-            set {
+            set
+            {
                 SetDailyTask(value);
+            }
+        }
+
+
+
+        private DailyTask _dailyTask;
+        private string _title;
+        private string _description;
+
+        private IDailyServices _dailyService;
+        private ListView listViewContainer;
+        private string ListViewContainer = nameof(ListViewContainer);
+
+        public DailyTaskDetailModel(IDailyServices dailyService)
+        {
+            _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
+        }
+
+        protected override void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (DailyTask.SubTasks.Count > 0)
+            {
+
+                FrameworkElement thisView = sender as FrameworkElement;
+                listViewContainer = thisView?.FindName(ListViewContainer) as ListView;
+
+                foreach (var task in DailyTask.SubTasks)
+                {
+                    DailyTaskDetail ucDailyTaskDetail = new DailyTaskDetail();
+                    listViewContainer.Items.Add(ucDailyTaskDetail);
+
+                    DailyTaskDetailModel ucModelView = ucDailyTaskDetail.DataContext as DailyTaskDetailModel;
+
+                    ucModelView.DailyTask = task;
+                }
             }
         }
 
@@ -40,22 +86,14 @@ namespace daily.UI.ViewsModel
             _dailyTask = value;
             _title = _dailyTask.Title;
             _description = _dailyTask.Description;
+            SubTasks = new ObservableCollection<DailyTask>();
+            foreach (var subTask in _dailyTask.SubTasks)
+            {
+                SubTasks.Add(subTask);
+            }
+
             OnPropertyChanged(nameof(Title));
             OnPropertyChanged(nameof(Description));
-
         }
-
-        private DailyTask _dailyTask;
-        private string _title;
-        private string _description;
-
-        private IDailyServices _dailyService;
-
-        public DailyTaskDetailModel(IDailyServices dailyService)
-        {
-            _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
-
-       }
-
     }
 }

@@ -34,8 +34,8 @@ namespace daily.UI.ViewsModel
         private ICommand _stopCommand;
 
         private IDailyServices _dailyService;
-        private StackPanel stakPanelContainer;
-
+        private StackPanel stackPanelContainer;
+        private string Container = nameof(Container);
 
         public MainViewModel(IDailyServices dailyService)
         {
@@ -53,9 +53,9 @@ namespace daily.UI.ViewsModel
         {
             DailyTaskDetail dailyTaskDetail = new DailyTaskDetail();
             FrameworkElement view = sender as FrameworkElement;
-            stakPanelContainer = view?.FindName("StackPanel") as StackPanel;
-            stakPanelContainer.Children.Clear();
-            stakPanelContainer.Children.Add(dailyTaskDetail);
+            stackPanelContainer = view?.FindName(Container) as StackPanel;
+            stackPanelContainer.Children.Clear();
+            stackPanelContainer.Children.Add(dailyTaskDetail);
 
             DailyTaskDetailModel ucModelView = dailyTaskDetail.DataContext as DailyTaskDetailModel;
 
