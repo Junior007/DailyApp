@@ -10,7 +10,7 @@ namespace daily.IoC
         public static SetterViewModelsBuilder SetMainView<T>() where T : class
         {
             ServiceCollection services = new ServiceCollection();
-            services.AddSingleton<T>();
+            services.AddScoped<T>();
 
             _container = new Container(services);
 

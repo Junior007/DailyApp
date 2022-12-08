@@ -1,16 +1,27 @@
 ﻿using daily.application.Services;
 using daily.domain.Models.Daily;
-using daily.UI.Infrastructure;
 using daily.UI.Views.Controls;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Linq;
 
 namespace daily.UI.ViewsModel
 {
     internal class DailyTaskDetailViewModel : AbstractViewModel
     {
+        private Guid _id;
+
+        public Guid Id
+        {
+            get
+            {
+                if (_id == Guid.Empty)
+                    _id = Guid.NewGuid();
+                return _id;
+            }
+        }
 
         public string Title
         {
@@ -62,8 +73,8 @@ namespace daily.UI.ViewsModel
         private string _description;
 
         private IDailyServices _dailyService;
-        private ListView listViewContainer;
-        private string ListViewContainer = nameof(ListViewContainer);
+        private StackPanel stackPanelContainer;
+        private string Container = nameof(Container);
 
         private double _width;
 
@@ -76,20 +87,20 @@ namespace daily.UI.ViewsModel
         {
             base.OnLoaded(sender, e);
 
-            if (DailyTask?.SubTasks.Count > 0)
+            if (SubTasks?.Count > 0)
             {
 
                 FrameworkElement thisView = sender as FrameworkElement;
-                listViewContainer = thisView?.FindName(ListViewContainer) as ListView;
+                stackPanelContainer = thisView?.FindName(Container) as StackPanel;
 
-                foreach (var task in DailyTask.SubTasks)
+                foreach (var task in SubTasks)
                 {
-                    DailyTaskDetailView dailyTaskDetailView = new DailyTaskDetailView();
+                    DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
+                    DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
+                    dailyTaskDetailModel.DailyTask = task;
 
-                    DailyTaskDetailViewModel dailyTaskDetailViewModel = dailyTaskDetailView.DataContext as DailyTaskDetailViewModel;
-                    dailyTaskDetailViewModel.DailyTask = task;
+                    stackPanelContainer.Children.Add(userControlDailyTaskDetail);
 
-                    listViewContainer.Items.Add(dailyTaskDetailView);
                 }
             }
         }
