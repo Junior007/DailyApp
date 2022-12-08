@@ -58,9 +58,18 @@ namespace daily.UI.ViewsModel
             }
         }
 
+        public double TextWidth {
+            get => _textWidth;
+            private set {
+                _textWidth = value;
+                OnPropertyChanged(); 
+            } 
+        }
+
         private DailyTask _dailyTask;
         private string _title;
         private string _description;
+        private double _textWidth;
 
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
@@ -80,14 +89,7 @@ namespace daily.UI.ViewsModel
         protected override void OnResize(object sender, SizeChangedEventArgs e)
         {
             base.OnResize(sender, e);
-
-            FrameworkElement thisView = sender as FrameworkElement;
-            FrameworkElement parent = thisView.Parent as FrameworkElement;
-
-            if (e.WidthChanged && parent != null)
-            {
-                Width = parent.ActualWidth;
-            }
+            TextWidth = ParentWidth * 0.9;
         }
 
         private void SetDailyTask(DailyTask value)

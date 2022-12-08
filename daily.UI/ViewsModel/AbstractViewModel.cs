@@ -8,7 +8,7 @@ namespace daily.UI.ViewsModel
     internal abstract class AbstractViewModel : INotifyPropertyChanged
     {
 
-        public double Width
+        public double ParentWidth
         {
             get => _width;
             set
@@ -33,6 +33,13 @@ namespace daily.UI.ViewsModel
 
         protected virtual void OnResize(object sender, SizeChangedEventArgs e)
         {
+            FrameworkElement thisView = sender as FrameworkElement;
+            FrameworkElement parent = thisView.Parent as FrameworkElement;
+
+            if (e.WidthChanged && parent != null)
+            {
+                ParentWidth = parent.ActualWidth;
+            }
         }
 
         protected virtual void OnLoaded(object sender, RoutedEventArgs e)

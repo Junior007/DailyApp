@@ -9,7 +9,8 @@
 
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100">
-    <Grid  Width="{Binding Width}">
+    <Grid  Width="{Binding TextWidth}"                 
+           HorizontalAlignment="Right">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -22,7 +23,7 @@
         </Grid.RowDefinitions>
 
         <TextBox  Grid.Row="0" 
-                  Width="{Binding Width}" 
+                  Width="{Binding TextWidth}"
                   Text="{Binding Description, Mode=TwoWay}" 
                   Height="Auto" 
                   AcceptsReturn="True" 
@@ -30,7 +31,7 @@
 
 
 
-        <StackPanel Orientation="Vertical" Name="Container"  Grid.Row="1" Margin="1,1,1,1">
+        <StackPanel Orientation="Vertical" Name="Container"  Grid.Row="1" Margin="0,0,0,0">
         </StackPanel>
 
     </Grid>

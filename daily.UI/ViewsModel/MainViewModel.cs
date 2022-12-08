@@ -11,6 +11,7 @@ namespace daily.UI.ViewsModel
 {
     internal class MainViewModel : AbstractViewModel
     {
+
         public DailyTask DailyWork
         {
             get => _dailyWork;
@@ -20,16 +21,40 @@ namespace daily.UI.ViewsModel
                 OnPropertyChanged();
             }
         }
+        public ICommand OnClickTab => onClickTab;
+
+        public double ContainerWidth
+        {
+            get=> _containerWidth; 
+            private set
+            {
+                _containerWidth = value;
+                OnPropertyChanged();
+            }
+        }
+
         private DailyTask _dailyWork;
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
         private string Container = nameof(Container);
+        private double _containerWidth;
+
+
+        private ICommand onClickTab;
 
         public MainViewModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
 
             DailyWork = _dailyService.Get();
+
+            onClickTab = new RelayCommand(ClickTab, value=>true);
+
+        }
+
+        private void ClickTab(object obj)
+        {
+            //throw new NotImplementedException();
         }
 
         protected override void OnLoaded(object sender, RoutedEventArgs e)
@@ -41,12 +66,7 @@ namespace daily.UI.ViewsModel
         protected override void OnResize(object sender, SizeChangedEventArgs e)
         {
             base.OnResize(sender, e);
-
-            if (e.WidthChanged)
-            {
-                FrameworkElement thisView = sender as FrameworkElement;
-                Width = thisView.ActualWidth;
-            }
+            ContainerWidth = ParentWidth * 0.9;
         }
 
         private void AddSubtasks(FrameworkElement? frameworkElement)
