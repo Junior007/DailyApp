@@ -58,16 +58,6 @@ namespace daily.UI.ViewsModel
             }
         }
 
-        public double Width
-        {
-            get => _width;
-            set
-            {
-                _width = value;
-                OnPropertyChanged();
-            }
-        }
-
         private DailyTask _dailyTask;
         private string _title;
         private string _description;
@@ -75,8 +65,6 @@ namespace daily.UI.ViewsModel
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
         private string Container = nameof(Container);
-
-        private double _width;
 
         public DailyTaskDetailViewModel(IDailyServices dailyService)
         {
@@ -86,24 +74,9 @@ namespace daily.UI.ViewsModel
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
             base.OnLoaded(sender, e);
-
-            if (SubTasks?.Count > 0)
-            {
-
-                FrameworkElement thisView = sender as FrameworkElement;
-                stackPanelContainer = thisView?.FindName(Container) as StackPanel;
-
-                foreach (var task in SubTasks)
-                {
-                    DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
-                    DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
-                    dailyTaskDetailModel.DailyTask = task;
-
-                    stackPanelContainer.Children.Add(userControlDailyTaskDetail);
-
-                }
-            }
+            AddSubtasks(sender as FrameworkElement);
         }
+
         protected override void OnResize(object sender, SizeChangedEventArgs e)
         {
             base.OnResize(sender, e);
@@ -131,5 +104,24 @@ namespace daily.UI.ViewsModel
             OnPropertyChanged(nameof(Title));
             OnPropertyChanged(nameof(Description));
         }
+        private void AddSubtasks(FrameworkElement? frameworkElement)
+        {
+            if (SubTasks?.Count > 0)
+            {
+
+                FrameworkElement thisView = frameworkElement as FrameworkElement;
+                stackPanelContainer = thisView?.FindName(Container) as StackPanel;
+
+                foreach (var task in SubTasks)
+                {
+                    DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
+                    DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
+                    dailyTaskDetailModel.DailyTask = task;
+                    stackPanelContainer.Children.Add(userControlDailyTaskDetail);
+                }
+            }
+        }
+
+
     }
 }

@@ -8,6 +8,17 @@ namespace daily.UI.ViewsModel
     internal abstract class AbstractViewModel : INotifyPropertyChanged
     {
 
+        public double Width
+        {
+            get => _width;
+            set
+            {
+                _width = value;
+                OnPropertyChanged();
+            }
+        }
+        private double _width;
+
         protected FrameworkElement _ownerView { get; set; }
         internal FrameworkElement OwnerView
         {

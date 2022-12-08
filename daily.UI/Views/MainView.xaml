@@ -10,7 +10,10 @@
         mc:Ignorable="d"
         Title="Daily Tasks" Height="450" Width="800">
 
-        
-        <StackPanel Orientation="Horizontal" Name="Container">
-        </StackPanel>
+
+    <StackPanel Name="Container"
+                Orientation="Vertical" 
+                Width="{Binding Width}" 
+                Margin="2,2,2,2">
+    </StackPanel>
 </Window>

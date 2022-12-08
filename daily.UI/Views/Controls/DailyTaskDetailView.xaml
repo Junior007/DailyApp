@@ -9,7 +9,7 @@
 
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100">
-    <Grid>
+    <Grid  Width="{Binding Width}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -21,11 +21,16 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBox  Grid.Row="0" Text="{Binding Description, Mode=TwoWay}" Width="800" ></TextBox>
+        <TextBox  Grid.Row="0" 
+                  Width="{Binding Width}" 
+                  Text="{Binding Description, Mode=TwoWay}" 
+                  Height="Auto" 
+                  AcceptsReturn="True" 
+                  TextWrapping="Wrap"></TextBox>
 
 
 
-        <StackPanel Orientation="Vertical" Name="Container"  Grid.Row="1">
+        <StackPanel Orientation="Vertical" Name="Container"  Grid.Row="1" Margin="1,1,1,1">
         </StackPanel>
 
     </Grid>

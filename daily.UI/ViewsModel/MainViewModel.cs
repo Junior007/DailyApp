@@ -20,23 +20,10 @@ namespace daily.UI.ViewsModel
                 OnPropertyChanged();
             }
         }
-
-
-        public double Width
-        {
-            get => _width;
-            set
-            {
-                _width = value;
-                OnPropertyChanged();
-            }
-        }
-
         private DailyTask _dailyWork;
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
         private string Container = nameof(Container);
-        private double _width;
 
         public MainViewModel(IDailyServices dailyService)
         {
@@ -47,15 +34,8 @@ namespace daily.UI.ViewsModel
 
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
-            FrameworkElement thisView = sender as FrameworkElement;
-            stackPanelContainer = thisView?.FindName(Container) as StackPanel;
-
-
-            DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
-            DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
-            dailyTaskDetailModel.DailyTask = _dailyService.Get();
-
-            stackPanelContainer.Children.Add(userControlDailyTaskDetail);
+            base.OnLoaded(sender, e);
+            AddSubtasks(sender as FrameworkElement);
         }
 
         protected override void OnResize(object sender, SizeChangedEventArgs e)
@@ -67,6 +47,18 @@ namespace daily.UI.ViewsModel
                 FrameworkElement thisView = sender as FrameworkElement;
                 Width = thisView.ActualWidth;
             }
+        }
+
+        private void AddSubtasks(FrameworkElement? frameworkElement)
+        {
+            FrameworkElement thisView = frameworkElement as FrameworkElement;
+            stackPanelContainer = thisView?.FindName(Container) as StackPanel;
+
+            DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
+            DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
+            dailyTaskDetailModel.DailyTask = _dailyService.Get();
+
+            stackPanelContainer.Children.Add(userControlDailyTaskDetail);
         }
 
     }
