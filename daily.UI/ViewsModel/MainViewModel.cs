@@ -51,8 +51,8 @@ namespace daily.UI.ViewsModel
             stackPanelContainer = thisView?.FindName(Container) as StackPanel;
 
 
-            DailyTaskDetail userControlDailyTaskDetail = new DailyTaskDetail();
-            DailyTaskDetailModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailModel;
+            DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
+            DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
             dailyTaskDetailModel.DailyTask = _dailyService.Get();
 
             stackPanelContainer.Children.Add(userControlDailyTaskDetail);

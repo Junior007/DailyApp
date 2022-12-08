@@ -16,7 +16,7 @@ namespace daily.IoC
         {
             foreach (var viewType in viewTypes)
             {
-                _container.Services.AddSingleton(viewType);
+                _container.Services.AddTransient(viewType);
             }
             return new SetterServicesBuilder(_container);
         }

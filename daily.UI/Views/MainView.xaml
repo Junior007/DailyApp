@@ -13,5 +13,4 @@
         
         <StackPanel Orientation="Horizontal" Name="Container">
         </StackPanel>
-
 </Window>

@@ -1,5 +1,6 @@
 ﻿using daily.application.Services;
 using daily.domain.Models.Daily;
+using daily.UI.Infrastructure;
 using daily.UI.Views.Controls;
 using System;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ using System.Windows.Controls;
 
 namespace daily.UI.ViewsModel
 {
-    internal class DailyTaskDetailModel : AbstractViewModel
+    internal class DailyTaskDetailViewModel : AbstractViewModel
     {
 
         public string Title
@@ -66,7 +67,7 @@ namespace daily.UI.ViewsModel
 
         private double _width;
 
-        public DailyTaskDetailModel(IDailyServices dailyService)
+        public DailyTaskDetailViewModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
         }
@@ -75,7 +76,7 @@ namespace daily.UI.ViewsModel
         {
             base.OnLoaded(sender, e);
 
-            if (DailyTask.SubTasks.Count > 0)
+            if (DailyTask?.SubTasks.Count > 0)
             {
 
                 FrameworkElement thisView = sender as FrameworkElement;
@@ -83,12 +84,12 @@ namespace daily.UI.ViewsModel
 
                 foreach (var task in DailyTask.SubTasks)
                 {
-                    DailyTaskDetail ucDailyTaskDetail = new DailyTaskDetail();
+                    DailyTaskDetailView dailyTaskDetailView = new DailyTaskDetailView();
 
-                    DailyTaskDetailModel ucModelView = ucDailyTaskDetail.DataContext as DailyTaskDetailModel;
-                    ucModelView.DailyTask = task;
+                    DailyTaskDetailViewModel dailyTaskDetailViewModel = dailyTaskDetailView.DataContext as DailyTaskDetailViewModel;
+                    dailyTaskDetailViewModel.DailyTask = task;
 
-                    listViewContainer.Items.Add(ucDailyTaskDetail);
+                    listViewContainer.Items.Add(dailyTaskDetailView);
                 }
             }
         }
@@ -99,7 +100,7 @@ namespace daily.UI.ViewsModel
             FrameworkElement thisView = sender as FrameworkElement;
             FrameworkElement parent = thisView.Parent as FrameworkElement;
 
-            if (e.WidthChanged && parent!=null)
+            if (e.WidthChanged && parent != null)
             {
                 Width = parent.ActualWidth;
             }
