@@ -12,24 +12,20 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition Width="900"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"></RowDefinition>
-            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" >
-            <TextBox Grid.Column="0" Grid.Row="0" Text="{Binding Title, Mode=TwoWay}" ></TextBox>
-            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Description, Mode=TwoWay}" Width="800" ></TextBox>
-        </StackPanel>
+        <TextBox  Grid.Row="0" Text="{Binding Description, Mode=TwoWay}" Width="800" ></TextBox>
 
 
 
-        <ListView Name="ListViewContainer"  Grid.Column="1" Grid.RowSpan="2" Visibility="Hidden">
+        <ListView Name="ListViewContainer"  Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <uc:DailyTaskDetail/>

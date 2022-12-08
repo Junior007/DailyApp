@@ -16,7 +16,12 @@ namespace daily.UI.ViewsModel
             {
                 _ownerView = value;
                 _ownerView.Loaded+=OnLoaded;
+                _ownerView.SizeChanged += OnResize;
             }
+        }
+
+        protected virtual void OnResize(object sender, SizeChangedEventArgs e)
+        {
         }
 
         protected virtual void OnLoaded(object sender, RoutedEventArgs e)

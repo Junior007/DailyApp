@@ -46,7 +46,15 @@ namespace daily.UI.ViewsModel
             }
         }
 
-
+        public double Width
+        {
+            get => _width;
+            set
+            {
+                _width = value;
+                OnPropertyChanged();
+            }
+        }
 
         private DailyTask _dailyTask;
         private string _title;
@@ -56,6 +64,8 @@ namespace daily.UI.ViewsModel
         private ListView listViewContainer;
         private string ListViewContainer = nameof(ListViewContainer);
 
+        private double _width;
+
         public DailyTaskDetailModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
@@ -63,6 +73,8 @@ namespace daily.UI.ViewsModel
 
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
+            base.OnLoaded(sender, e);
+
             if (DailyTask.SubTasks.Count > 0)
             {
 
@@ -73,12 +85,23 @@ namespace daily.UI.ViewsModel
                 {
                     DailyTaskDetail ucDailyTaskDetail = new DailyTaskDetail();
 
-                    listViewContainer.Items.Add(ucDailyTaskDetail);
-
                     DailyTaskDetailModel ucModelView = ucDailyTaskDetail.DataContext as DailyTaskDetailModel;
-
                     ucModelView.DailyTask = task;
+
+                    listViewContainer.Items.Add(ucDailyTaskDetail);
                 }
+            }
+        }
+        protected override void OnResize(object sender, SizeChangedEventArgs e)
+        {
+            base.OnResize(sender, e);
+
+            FrameworkElement thisView = sender as FrameworkElement;
+            FrameworkElement parent = thisView.Parent as FrameworkElement;
+
+            if (e.WidthChanged && parent!=null)
+            {
+                Width = parent.ActualWidth;
             }
         }
 

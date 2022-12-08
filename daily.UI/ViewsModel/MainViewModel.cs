@@ -21,45 +21,53 @@ namespace daily.UI.ViewsModel
             }
         }
 
-        public ICommand AddCommand { get => _addCommand; }
-        public ICommand DeleteCommand { get => _deleteCommand; }
-        public ICommand StartCommand { get => _startCommand; }
-        public ICommand StopCommand { get => _stopCommand; }
+
+        public double Width
+        {
+            get => _width;
+            set
+            {
+                _width = value;
+                OnPropertyChanged();
+            }
+        }
 
         private DailyTask _dailyWork;
-
-        private ICommand _addCommand;
-        private ICommand _deleteCommand;
-        private ICommand _startCommand;
-        private ICommand _stopCommand;
-
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
         private string Container = nameof(Container);
+        private double _width;
 
         public MainViewModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
-
-            _addCommand = new AddCommand();
-            _deleteCommand = new DeleteCommand();
-            _startCommand = new StartCommand();
-            _stopCommand = new StopCommand();
 
             DailyWork = _dailyService.Get();
         }
 
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
-            DailyTaskDetail dailyTaskDetail = new DailyTaskDetail();
-            FrameworkElement view = sender as FrameworkElement;
-            stackPanelContainer = view?.FindName(Container) as StackPanel;
-            stackPanelContainer.Children.Clear();
-            stackPanelContainer.Children.Add(dailyTaskDetail);
+            FrameworkElement thisView = sender as FrameworkElement;
+            stackPanelContainer = thisView?.FindName(Container) as StackPanel;
 
-            DailyTaskDetailModel ucModelView = dailyTaskDetail.DataContext as DailyTaskDetailModel;
 
-            ucModelView.DailyTask = _dailyService.Get();
+            DailyTaskDetail userControlDailyTaskDetail = new DailyTaskDetail();
+            DailyTaskDetailModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailModel;
+            dailyTaskDetailModel.DailyTask = _dailyService.Get();
+
+            stackPanelContainer.Children.Add(userControlDailyTaskDetail);
         }
+
+        protected override void OnResize(object sender, SizeChangedEventArgs e)
+        {
+            base.OnResize(sender, e);
+
+            if (e.WidthChanged)
+            {
+                FrameworkElement thisView = sender as FrameworkElement;
+                Width = thisView.ActualWidth;
+            }
+        }
+
     }
 }
