@@ -4,23 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm ="clr-namespace:daily.UI.Infrastructure"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         vm:Locator.IsAutomaticLocator="True"
-
         xmlns:uc="clr-namespace:daily.UI.Views.Controls"
         mc:Ignorable="d"
-        Title="Daily Tasks" Height="450" Width="800">
+        Title="Daily Tasks" Height="450" Width="800"
+        Background="AliceBlue">
 
 
     <StackPanel Name="Container"
                 Orientation="Vertical" 
                 Width="{Binding Width}" 
                 Margin="0,0,0,0">
-        <TabControl>
-            <TabItem Header="General" >
-                
+        <TabControl Name="NavBar" Background="AliceBlue">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged" >
+                    <i:InvokeCommandAction Command="{Binding OnSelectionChanged}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <TabItem Header="General"  >
             </TabItem>
-            <TabItem Header="Security" />
-            <TabItem Header="Details" />
+            <TabItem Header="Security" Background="AliceBlue"/>
+            <TabItem Header="Details" Background="AliceBlue"/>
         </TabControl>
     </StackPanel>
 </Window>
