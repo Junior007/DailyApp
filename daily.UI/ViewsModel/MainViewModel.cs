@@ -52,13 +52,15 @@ namespace daily.UI.ViewsModel
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
 
-            onSelectionChanged = new RelayCommand(ClickTab, value => true);
+            onSelectionChanged = new RelayCommand(SelectionChanged, value => true);
         }
 
-        private void ClickTab(object obj)
+        private void SelectionChanged(object obj)
         {
-            //throw new NotImplementedException();
-            MessageBox.Show("Click");
+            TabItem tab = (TabItem)navBar.SelectedItem;
+            string lookfor =(string)tab.Header;
+
+            AddSubtasks(OwnerView as FrameworkElement, lookfor);
         }
 
         protected override void OnLoaded(object sender, RoutedEventArgs e)
@@ -87,9 +89,7 @@ namespace daily.UI.ViewsModel
                 TabItem item = new TabItem
                 {
                     Header = daily.Title
-
                 };
-
                 navBar.Items.Add(item);
             }
         }
@@ -102,9 +102,22 @@ namespace daily.UI.ViewsModel
             DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
             DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
             dailyTaskDetailModel.DailyTask = _dailyService.Get();
-
+            stackPanelContainer.Children.Clear();
             stackPanelContainer.Children.Add(userControlDailyTaskDetail);
         }
 
+        private void AddSubtasks(FrameworkElement frameworkElement, string lookfor)
+        {
+            FrameworkElement thisView = frameworkElement as FrameworkElement;
+            stackPanelContainer = thisView?.FindName(Container) as StackPanel;
+
+            DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
+            DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
+            DateTime dateTime;
+            DateTime.TryParse( lookfor, out dateTime);
+            dailyTaskDetailModel.DailyTask = _dailyService.Get(dateTime);
+            stackPanelContainer.Children.Clear();
+            stackPanelContainer.Children.Add(userControlDailyTaskDetail);
+        }
     }
 }

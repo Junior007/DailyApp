@@ -10,12 +10,7 @@
         mc:Ignorable="d"
         Title="Daily Tasks" Height="450" Width="800"
         Background="AliceBlue">
-
-
-    <StackPanel Name="Container"
-                Orientation="Vertical" 
-                Width="{Binding Width}" 
-                Margin="0,0,0,0">
+    <StackPanel>
         <TabControl Name="NavBar" Background="AliceBlue">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged" >
@@ -27,5 +22,12 @@
             <TabItem Header="Security" Background="AliceBlue"/>
             <TabItem Header="Details" Background="AliceBlue"/>
         </TabControl>
+
+        <StackPanel Name="Container"
+                Orientation="Vertical" 
+                Width="{Binding Width}" 
+                Margin="0,0,0,0">
+
+        </StackPanel>
     </StackPanel>
 </Window>
