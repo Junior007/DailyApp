@@ -2,8 +2,11 @@
 {
     public class DailyTask
     {
-        internal delegate void TaskStartEventHandler(object sender, DailyTaskStartEventArgs e);
-        internal event TaskStartEventHandler TaskStartEvent;
+        public delegate void TaskStartEventHandler(object sender, DailyTaskStartEventArgs e);
+        public event TaskStartEventHandler TaskStartEvent;
+
+        public delegate void TaskStopEventHandler(object sender, DailyTaskStopEventArgs e);
+        public event TaskStopEventHandler TaskStopEvent;
 
         public string Title { get;  set; }
         public string Description { get;  set; }
@@ -25,7 +28,7 @@
         }
         public void AddTask(DailyTask task)
         {
-            //TODO : en la creación también se a de atachar todos los eventos
+            //TODO : en la creación también se ha de atachar todos los eventos
             task.TaskStartEvent += (sender, e) => StartUp(sender as DailyTask);
             SubTasks.Add(task);
         }
@@ -70,6 +73,7 @@
                 interval.Stop();
             }
 
+            TaskStopEvent?.Invoke(this, new DailyTaskStopEventArgs());
         }
     }
 }

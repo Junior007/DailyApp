@@ -59,16 +59,17 @@ namespace daily.UI.ViewsModel
             }
         }
 
-        public double TextWidth {
+        public double TextWidth
+        {
             get => _textWidth;
-            private set {
+            private set
+            {
                 _textWidth = value;
-                OnPropertyChanged(); 
-            } 
+                OnPropertyChanged();
+            }
         }
 
-        public ICommand Start => start;
-        public ICommand Stop => stop;
+        public ICommand StartStop => startStop;
 
         private DailyTask _dailyTask;
         private string _title;
@@ -79,24 +80,21 @@ namespace daily.UI.ViewsModel
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
         private string Container = nameof(Container);
-        private ICommand start;
-        private ICommand stop;
+        private ICommand startStop;
 
         public DailyTaskDetailViewModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
 
-            start = new RelayCommand(startAction, value => true);
-            stop = new RelayCommand(stopAction, value => true);
+            startStop = new RelayCommand(startStopAction, value => true);
         }
 
-        private void startAction(object obj)
+        private void startStopAction(object obj)
         {
-            DailyTask.Start();
-        }
-        private void stopAction(object obj)
-        {
-            DailyTask.Stop();
+            if (DailyTask.IsRunning)
+                DailyTask.Stop();
+            else
+                DailyTask.Start();
         }
 
         protected override void OnLoaded(object sender, RoutedEventArgs e)
@@ -108,7 +106,7 @@ namespace daily.UI.ViewsModel
         protected override void OnResize(object sender, SizeChangedEventArgs e)
         {
             base.OnResize(sender, e);
-            TextWidth = ParentWidth * 0.9;
+            TextWidth = ParentWidth * 0.93;
         }
 
         private void SetDailyTask(DailyTask value)
@@ -124,7 +122,15 @@ namespace daily.UI.ViewsModel
 
             OnPropertyChanged(nameof(Title));
             OnPropertyChanged(nameof(Description));
+            _dailyTask.TaskStartEvent += OnChangeTaskState;
+            _dailyTask.TaskStopEvent += OnChangeTaskState;
         }
+
+        private void OnChangeTaskState(object sender, Object e)
+        {
+            IsRunning = _dailyTask.IsRunning;
+        }
+
         private void AddSubtasks(FrameworkElement? frameworkElement)
         {
             if (SubTasks?.Count > 0)

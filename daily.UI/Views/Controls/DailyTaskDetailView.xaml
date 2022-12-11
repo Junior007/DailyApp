@@ -23,11 +23,11 @@
             <RowDefinition Height="Auto" MinHeight="17.96"></RowDefinition>
             <RowDefinition Height="Auto" MinHeight="0"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Text="Start/Stop" Grid.Row="0"
-                   Grid.Column="0" Grid.RowSpan="2" >
+        <TextBlock Text="{Binding IsRunning}" Grid.Row="0"
+                   Grid.Column="0"  >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewMouseUp" >
-                    <i:InvokeCommandAction Command="{Binding Start}" />
+                    <i:InvokeCommandAction Command="{Binding StartStop}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBlock>
