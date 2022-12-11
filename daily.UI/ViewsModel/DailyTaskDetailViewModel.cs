@@ -6,22 +6,13 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
+using System.Windows.Input;
+using daily.UI.Commands;
 
 namespace daily.UI.ViewsModel
 {
     internal class DailyTaskDetailViewModel : AbstractViewModel
     {
-        private Guid _id;
-
-        public Guid Id
-        {
-            get
-            {
-                if (_id == Guid.Empty)
-                    _id = Guid.NewGuid();
-                return _id;
-            }
-        }
 
         public string Title
         {
@@ -42,6 +33,16 @@ namespace daily.UI.ViewsModel
                 _dailyTask.Description = value;
                 OnPropertyChanged();
             }
+        }
+        public bool IsRunning
+        {
+            get => _isRunning;
+            set
+            {
+                _isRunning = value;
+                OnPropertyChanged();
+            }
+
         }
         public ObservableCollection<DailyTask> SubTasks
         {
@@ -66,18 +67,36 @@ namespace daily.UI.ViewsModel
             } 
         }
 
+        public ICommand Start => start;
+        public ICommand Stop => stop;
+
         private DailyTask _dailyTask;
         private string _title;
         private string _description;
+        private bool _isRunning;
         private double _textWidth;
 
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
         private string Container = nameof(Container);
+        private ICommand start;
+        private ICommand stop;
 
         public DailyTaskDetailViewModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
+
+            start = new RelayCommand(startAction, value => true);
+            stop = new RelayCommand(stopAction, value => true);
+        }
+
+        private void startAction(object obj)
+        {
+            DailyTask.Start();
+        }
+        private void stopAction(object obj)
+        {
+            DailyTask.Stop();
         }
 
         protected override void OnLoaded(object sender, RoutedEventArgs e)

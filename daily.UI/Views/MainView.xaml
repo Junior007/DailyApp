@@ -8,10 +8,10 @@
         vm:Locator.IsAutomaticLocator="True"
         xmlns:uc="clr-namespace:daily.UI.Views.Controls"
         mc:Ignorable="d"
-        Title="Daily Tasks" Height="450" Width="800"
-        Background="AliceBlue">
+        Title="Daily Tasks" 
+        d:DesignHeight="800" d:DesignWidth="800">
     <StackPanel>
-        <TabControl Name="NavBar" Background="AliceBlue">
+        <TabControl Name="NavBar" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged" >
                     <i:InvokeCommandAction Command="{Binding OnSelectionChanged}" />
@@ -19,15 +19,16 @@
             </i:Interaction.Triggers>
             <TabItem Header="General"  >
             </TabItem>
-            <TabItem Header="Security" Background="AliceBlue"/>
-            <TabItem Header="Details" Background="AliceBlue"/>
+            <TabItem Header="Security" />
+            <TabItem Header="Details" />
         </TabControl>
-
+        
         <StackPanel Name="Container"
-                Orientation="Vertical" 
-                Width="{Binding Width}" 
-                Margin="0,0,0,0">
-
+            Orientation="Vertical" 
+            Width="Auto" 
+            Height="Auto"
+            Margin="0,0,0,0">
         </StackPanel>
+        
     </StackPanel>
 </Window>

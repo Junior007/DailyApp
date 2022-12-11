@@ -52,10 +52,10 @@ namespace daily.UI.ViewsModel
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
 
-            onSelectionChanged = new RelayCommand(SelectionChanged, value => true);
+            onSelectionChanged = new RelayCommand(changeDateTasksAction, value => true);
         }
 
-        private void SelectionChanged(object obj)
+        private void changeDateTasksAction(object obj)
         {
             TabItem tab = (TabItem)navBar.SelectedItem;
             string lookfor =(string)tab.Header;

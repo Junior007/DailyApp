@@ -4,35 +4,44 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm ="clr-namespace:daily.UI.Infrastructure"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              vm:Locator.IsAutomaticLocator="True"
              xmlns:uc="clr-namespace:daily.UI.Views.Controls"
 
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100">
-    <Grid  Width="{Binding TextWidth}"                 
+    <Grid  Width="Auto"                 
            HorizontalAlignment="Right">
 
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto" MinHeight="17.96"></RowDefinition>
+            <RowDefinition Height="Auto" MinHeight="0"></RowDefinition>
         </Grid.RowDefinitions>
-
+        <TextBlock Text="Start/Stop" Grid.Row="0"
+                   Grid.Column="0" Grid.RowSpan="2" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseUp" >
+                    <i:InvokeCommandAction Command="{Binding Start}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBlock>
         <TextBox  Grid.Row="0" 
+                  Grid.Column="1"
                   Width="{Binding TextWidth}"
                   Text="{Binding Description, Mode=TwoWay}" 
                   Height="Auto" 
                   AcceptsReturn="True" 
-                  TextWrapping="Wrap"></TextBox>
+                  TextWrapping="Wrap" ></TextBox>
 
 
 
-        <StackPanel Orientation="Vertical" Name="Container"  Grid.Row="1" Margin="0,0,0,0">
-        </StackPanel>
+        <StackPanel Orientation="Vertical" Name="Container"  Grid.Row="1" Grid.ColumnSpan="2"/>
 
     </Grid>
 </UserControl>
