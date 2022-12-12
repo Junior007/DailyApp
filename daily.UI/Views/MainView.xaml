@@ -10,8 +10,10 @@
         mc:Ignorable="d"
         Title="Daily Tasks" 
         d:DesignHeight="800" d:DesignWidth="800">
-    <StackPanel>
-        <TabControl Name="NavBar" >
+
+    <DockPanel>
+        <TabControl Name="NavBar" 
+                DockPanel.Dock="Top">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged" >
                     <i:InvokeCommandAction Command="{Binding OnSelectionChanged}" />
@@ -22,13 +24,10 @@
             <TabItem Header="Security" />
             <TabItem Header="Details" />
         </TabControl>
-        
+
         <StackPanel Name="Container"
             Orientation="Vertical" 
-            Width="Auto" 
-            Height="Auto"
-            Margin="0,0,0,0">
-        </StackPanel>
-        
-    </StackPanel>
+            DockPanel.Dock="Bottom"
+            Margin="0,0,0,0"/>
+    </DockPanel>
 </Window>
