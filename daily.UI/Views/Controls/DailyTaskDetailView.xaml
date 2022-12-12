@@ -11,7 +11,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100">
     <Grid  Width="Auto"                 
-           HorizontalAlignment="Right">
+           HorizontalAlignment="Stretch">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70"></ColumnDefinition>
@@ -34,6 +34,7 @@
         <TextBox  Grid.Row="0" 
                   Grid.Column="1"
                   Width="{Binding TextWidth}"
+                  HorizontalAlignment="Stretch"
                   Text="{Binding Description, Mode=TwoWay}" 
                   Height="Auto" 
                   AcceptsReturn="True" 
