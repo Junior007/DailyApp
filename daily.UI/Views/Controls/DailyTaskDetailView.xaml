@@ -42,7 +42,12 @@
 
 
 
-        <StackPanel Orientation="Vertical" Name="Container"  Grid.Row="1" Grid.ColumnSpan="2"/>
+        <StackPanel Name="Container"
+                    Orientation="Vertical" 
+                    VerticalAlignment="Stretch" 
+                    HorizontalAlignment="Stretch"
+                    Grid.Row="1" 
+                    Grid.ColumnSpan="2"/>
 
     </Grid>
 </UserControl>
