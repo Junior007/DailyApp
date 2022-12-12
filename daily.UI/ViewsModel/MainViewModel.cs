@@ -14,15 +14,6 @@ namespace daily.UI.ViewsModel
     internal class MainViewModel : AbstractViewModel
     {
 
-        /*public DailyTask DailyWork
-        {
-            get => _dailyWork;
-            set
-            {
-                _dailyWork = value;
-                OnPropertyChanged();
-            }
-        }*/
         public ICommand OnSelectionChanged => onSelectionChanged;
 
         public double ContainerWidth
@@ -35,7 +26,6 @@ namespace daily.UI.ViewsModel
             }
         }
 
-        //private DailyTask _dailyWork;
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
         private TabControl navBar;
@@ -73,7 +63,7 @@ namespace daily.UI.ViewsModel
         protected override void OnResize(object sender, SizeChangedEventArgs e)
         {
             base.OnResize(sender, e);
-            ContainerWidth = ParentWidth * 0.9;
+            ContainerWidth = ParentWidth* 0.9;
         }
 
         private void AddTabs(FrameworkElement? frameworkElement)

@@ -24,10 +24,13 @@
             <TabItem Header="Security" />
             <TabItem Header="Details" />
         </TabControl>
-
-        <StackPanel Name="Container"
+        <ScrollViewer HorizontalScrollBarVisibility="Visible"
+                      VerticalScrollBarVisibility="Visible">
+            <StackPanel Name="Container"
             Orientation="Vertical" 
+                        Width="{Binding ContainerWidth}"
             DockPanel.Dock="Bottom"
             Margin="0,0,0,0"/>
+        </ScrollViewer>
     </DockPanel>
 </Window>

@@ -33,12 +33,13 @@ namespace daily.UI.ViewsModel
 
         protected virtual void OnResize(object sender, SizeChangedEventArgs e)
         {
-            FrameworkElement thisView = sender as FrameworkElement;
-            FrameworkElement parent = thisView.Parent as FrameworkElement;
+            FrameworkElement parent = OwnerView.Parent as FrameworkElement;
 
-            if (e.WidthChanged && parent != null)
+            double parentWidth = parent != null? parent.ActualWidth :Application.Current.MainWindow.ActualWidth;
+
+            if (e.WidthChanged)
             {
-                ParentWidth = parent.ActualWidth;
+                ParentWidth = parentWidth;
             }
         }
 
