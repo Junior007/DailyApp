@@ -63,7 +63,7 @@ namespace daily.UI.ViewsModel
         protected override void OnResize(object sender, SizeChangedEventArgs e)
         {
             base.OnResize(sender, e);
-            ContainerWidth = ParentWidth* 0.9;
+            ContainerWidth = ParentWidth-150;
         }
 
         private void AddTabs(FrameworkElement? frameworkElement)
