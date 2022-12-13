@@ -25,6 +25,9 @@ namespace daily.UI.ViewsModel
                 OnPropertyChanged();
             }
         }
+
+        public int Level { get=> _dailyTask.Level;  }  
+
         public string Title
         {
             get => _title;
@@ -153,13 +156,16 @@ namespace daily.UI.ViewsModel
 
         private void setTimming()
         {
-            long ticks = _dailyTask.Intervals.Where(i => i.IsClose).Select(i => (TimeSpan)(i.End - i.Init)).Sum(ts=>ts.Ticks);
-            if(_dailyTask.Intervals.Where(i => i.IsOpen).Any())
+            lock (_dailyTask.Intervals)
             {
-                var lastOpen = _dailyTask.Intervals.Where(i => i.IsOpen).Last();
-                ticks += (DateTime.Now - lastOpen.Init).Ticks;
+                long ticks = _dailyTask.Intervals.Where(i => i.IsClose).Select(i => (TimeSpan)(i.End - i.Init)).Sum(ts => ts.Ticks);
+                if (_dailyTask.Intervals.Where(i => i.IsOpen).Any())
+                {
+                    var lastOpen = _dailyTask.Intervals.Where(i => i.IsOpen).Last();
+                    ticks += (DateTime.Now - lastOpen.Init).Ticks;
+                }
+                Timming = new TimeSpan(ticks);
             }
-            Timming = new TimeSpan(ticks);
         }
     }
 }

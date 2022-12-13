@@ -76,7 +76,7 @@ namespace daily.UI.ViewsModel
         private void setSize(object? sender, ElapsedEventArgs e)
         {
             onResizeCompleted.Stop();
-            ContainerWidth = ParentWidth - 150;
+            ContainerWidth = ParentWidth-40;
         }
 
         private void AddTabs(FrameworkElement? frameworkElement)

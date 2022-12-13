@@ -10,8 +10,10 @@
              xmlns:converters="clr-namespace:daily.UI.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100">
+   
     <UserControl.Resources>
         <converters:IsRunningToIconConverter x:Key="IsRunningToIconConverter" />
+        <converters:IsRunningToBackgroundConverter x:Key="IsRunningToBackgroundConverter" />
         <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
     </UserControl.Resources>
 
@@ -19,40 +21,55 @@
            HorizontalAlignment="Stretch">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition Width="135"></ColumnDefinition>
             <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="17.96"></RowDefinition>
+            <RowDefinition Height="Auto" MinHeight="20"></RowDefinition>
             <RowDefinition Height="Auto" MinHeight="0"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+        
+        <StackPanel Orientation="Horizontal" 
+                    Grid.Row="0" 
+                    Grid.Column="0"
+                    Margin="0,2,0,0">
+            
             <TextBlock 
                 Text="{Binding Timming , Converter={StaticResource TimeSpanConverter}}" 
                 Padding="10,0,10,0"></TextBlock>
+
             <Button 
-                FontFamily="Segoe MDL2 Assets" Content="{Binding IsRunning, Converter={StaticResource IsRunningToIconConverter}}" 
+                FontFamily="Segoe MDL2 Assets" 
+                Content="{Binding IsRunning, Converter={StaticResource IsRunningToIconConverter}}" 
                 Padding="10,0,10,0"
                 Height="20"
                 VerticalAlignment="Top"
-                >
+                Background="{Binding IsRunning, Converter={StaticResource IsRunningToBackgroundConverter}}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseUp" >
                         <i:InvokeCommandAction Command="{Binding StartStop}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-        </StackPanel>
 
+            <Button 
+                FontFamily="Segoe MDL2 Assets" Content="&#xE710;" 
+                Padding="10,0,10,0"
+                Height="20"
+                VerticalAlignment="Top">
+
+            </Button>
+
+        </StackPanel>
 
         <TextBox  Grid.Row="0" 
                   Grid.Column="1"
                   Text="{Binding Description, Mode=TwoWay}" 
                   Height="Auto" 
                   AcceptsReturn="True" 
-                  TextWrapping="Wrap" ></TextBox>
+                  TextWrapping="Wrap" 
+                  Margin="0,2,0,0"></TextBox>
 
         <StackPanel Name="Container"
                     Orientation="Vertical" 
