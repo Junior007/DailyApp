@@ -6,10 +6,14 @@
              xmlns:vm ="clr-namespace:daily.UI.Infrastructure"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              vm:Locator.IsAutomaticLocator="True"
-             xmlns:uc="clr-namespace:daily.UI.Views.Controls"
-
+             xmlns:uc="clr-namespace:daily.UI.Views.Controls" 
+             xmlns:converters="clr-namespace:daily.UI.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100">
+    <UserControl.Resources>
+        <converters:IsRunningToIconConverter x:Key="IsRunningToIconConverter" />
+    </UserControl.Resources>
+
     <Grid  Width="Auto"                 
            HorizontalAlignment="Stretch">
 
@@ -23,14 +27,15 @@
             <RowDefinition Height="Auto" MinHeight="17.96"></RowDefinition>
             <RowDefinition Height="Auto" MinHeight="0"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding IsRunning}" Grid.Row="0"
-                   Grid.Column="0"  >
+        <!--TextBlock Text="{Binding IsRunning}" Grid.Row="0"
+                   Grid.Column="0"  -->
+        <Button FontFamily="Segoe MDL2 Assets" Content="{Binding IsRunning, Converter={StaticResource IsRunningToIconConverter}}" Grid.Row="0" Grid.Column="0">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewMouseUp" >
                     <i:InvokeCommandAction Command="{Binding StartStop}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </TextBlock>
+        </Button>
         <TextBox  Grid.Row="0" 
                   Grid.Column="1"
                   
