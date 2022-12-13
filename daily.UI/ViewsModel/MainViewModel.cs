@@ -5,6 +5,7 @@ using daily.UI.Views.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,6 +27,17 @@ namespace daily.UI.ViewsModel
             }
         }
 
+        public MainViewModel(IDailyServices dailyService)
+        {
+            _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
+
+            onSelectionChanged = new RelayCommand(changeDateTasksAction, value => true);
+
+            onResizeCompleted.Enabled = true;
+            onResizeCompleted.Elapsed += new ElapsedEventHandler(setSize);
+        }
+
+
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
         private TabControl navBar;
@@ -34,21 +46,15 @@ namespace daily.UI.ViewsModel
         private string NavBar = nameof(NavBar);
 
         private double _containerWidth;
+        private Timer onResizeCompleted = new Timer(250);
 
 
         private ICommand onSelectionChanged;
 
-        public MainViewModel(IDailyServices dailyService)
-        {
-            _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
-
-            onSelectionChanged = new RelayCommand(changeDateTasksAction, value => true);
-        }
-
         private void changeDateTasksAction(object obj)
         {
             TabItem tab = (TabItem)navBar.SelectedItem;
-            string lookfor =(string)tab.Header;
+            string lookfor = (string)tab.Header;
 
             AddSubtasks(OwnerView as FrameworkElement, lookfor);
         }
@@ -62,8 +68,15 @@ namespace daily.UI.ViewsModel
 
         protected override void OnResize(object sender, SizeChangedEventArgs e)
         {
+            onResizeCompleted.Stop();
             base.OnResize(sender, e);
-            ContainerWidth = ParentWidth-150;
+            onResizeCompleted.Start();
+        }
+
+        private void setSize(object? sender, ElapsedEventArgs e)
+        {
+            onResizeCompleted.Stop();
+            ContainerWidth = ParentWidth - 150;
         }
 
         private void AddTabs(FrameworkElement? frameworkElement)
@@ -104,7 +117,7 @@ namespace daily.UI.ViewsModel
             DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
             DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
             DateTime dateTime;
-            DateTime.TryParse( lookfor, out dateTime);
+            DateTime.TryParse(lookfor, out dateTime);
             dailyTaskDetailModel.DailyTask = _dailyService.Get(dateTime);
             stackPanelContainer.Children.Clear();
             stackPanelContainer.Children.Add(userControlDailyTaskDetail);

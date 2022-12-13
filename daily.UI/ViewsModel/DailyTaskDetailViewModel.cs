@@ -59,23 +59,13 @@ namespace daily.UI.ViewsModel
             }
         }
 
-        public double TextWidth
-        {
-            get => _textWidth;
-            private set
-            {
-                _textWidth = value;
-                OnPropertyChanged();
-            }
-        }
-
         public ICommand StartStop => startStop;
 
         private DailyTask _dailyTask;
         private string _title;
         private string _description;
         private bool _isRunning;
-        private double _textWidth;
+
 
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
@@ -100,13 +90,7 @@ namespace daily.UI.ViewsModel
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
             base.OnLoaded(sender, e);
-            AddSubtasks(sender as FrameworkElement);
-        }
-
-        protected override void OnResize(object sender, SizeChangedEventArgs e)
-        {
-            base.OnResize(sender, e);
-            TextWidth = ParentWidth * 0.93;
+            AddSubtaskViews(sender as FrameworkElement);
         }
 
         private void SetDailyTask(DailyTask value)
@@ -131,7 +115,7 @@ namespace daily.UI.ViewsModel
             IsRunning = _dailyTask.IsRunning;
         }
 
-        private void AddSubtasks(FrameworkElement? frameworkElement)
+        private void AddSubtaskViews(FrameworkElement? frameworkElement)
         {
             if (SubTasks?.Count > 0)
             {
