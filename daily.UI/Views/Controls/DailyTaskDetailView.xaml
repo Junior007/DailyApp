@@ -15,7 +15,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
 
@@ -33,8 +33,7 @@
         </TextBlock>
         <TextBox  Grid.Row="0" 
                   Grid.Column="1"
-                  Width="{Binding TextWidth}"
-                  HorizontalAlignment="Stretch"
+                  
                   Text="{Binding Description, Mode=TwoWay}" 
                   Height="Auto" 
                   AcceptsReturn="True" 
@@ -44,8 +43,7 @@
 
         <StackPanel Name="Container"
                     Orientation="Vertical" 
-                    VerticalAlignment="Stretch" 
-                    HorizontalAlignment="Stretch"
+
                     Grid.Row="1" 
                     Grid.ColumnSpan="2"/>
 

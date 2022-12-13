@@ -28,8 +28,7 @@
                       VerticalScrollBarVisibility="Visible">
             <StackPanel Name="Container"
             Orientation="Vertical" 
-            VerticalAlignment="Stretch" 
-            HorizontalAlignment="Stretch"
+            Width="800"
             DockPanel.Dock="Bottom"
             Margin="0,0,0,0"/>
         </ScrollViewer>
