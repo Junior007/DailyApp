@@ -8,12 +8,23 @@ using System.Windows.Controls;
 using System.Linq;
 using System.Windows.Input;
 using daily.UI.Commands;
+using System.Collections.Generic;
+using System.Timers;
 
 namespace daily.UI.ViewsModel
 {
     internal class DailyTaskDetailViewModel : AbstractViewModel
     {
 
+        public TimeSpan Timming
+        {
+            get => _timming;
+            set
+            {
+                _timming = value;
+                OnPropertyChanged();
+            }
+        }
         public string Title
         {
             get => _title;
@@ -65,18 +76,24 @@ namespace daily.UI.ViewsModel
         private string _title;
         private string _description;
         private bool _isRunning;
-
+        private TimeSpan _timming = DateTime.Now - DateTime.Now;
 
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
         private string Container = nameof(Container);
         private ICommand startStop;
 
+        private Timer refreshTimming = new Timer(30000);
+
         public DailyTaskDetailViewModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
-
             startStop = new RelayCommand(startStopAction, value => true);
+
+
+            refreshTimming.Enabled = true;
+            refreshTimming.Elapsed += new ElapsedEventHandler((object? sender, ElapsedEventArgs e) => setTimming());
+
         }
 
         private void startStopAction(object obj)
@@ -134,5 +151,15 @@ namespace daily.UI.ViewsModel
         }
 
 
+        private void setTimming()
+        {
+            long ticks = _dailyTask.Intervals.Where(i => i.IsClose).Select(i => (TimeSpan)(i.End - i.Init)).Sum(ts=>ts.Ticks);
+            if(_dailyTask.Intervals.Where(i => i.IsOpen).Any())
+            {
+                var lastOpen = _dailyTask.Intervals.Where(i => i.IsOpen).Last();
+                ticks += (DateTime.Now - lastOpen.Init).Ticks;
+            }
+            Timming = new TimeSpan(ticks);
+        }
     }
 }

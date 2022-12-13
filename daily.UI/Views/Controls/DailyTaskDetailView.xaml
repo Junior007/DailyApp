@@ -12,13 +12,14 @@
              d:DesignHeight="100" d:DesignWidth="100">
     <UserControl.Resources>
         <converters:IsRunningToIconConverter x:Key="IsRunningToIconConverter" />
+        <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
     </UserControl.Resources>
 
     <Grid  Width="Auto"                 
            HorizontalAlignment="Stretch">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70"></ColumnDefinition>
+            <ColumnDefinition Width="100"></ColumnDefinition>
             <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
@@ -27,28 +28,35 @@
             <RowDefinition Height="Auto" MinHeight="17.96"></RowDefinition>
             <RowDefinition Height="Auto" MinHeight="0"></RowDefinition>
         </Grid.RowDefinitions>
-        <!--TextBlock Text="{Binding IsRunning}" Grid.Row="0"
-                   Grid.Column="0"  -->
-        <Button FontFamily="Segoe MDL2 Assets" Content="{Binding IsRunning, Converter={StaticResource IsRunningToIconConverter}}" Grid.Row="0" Grid.Column="0">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="PreviewMouseUp" >
-                    <i:InvokeCommandAction Command="{Binding StartStop}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Button>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+            <TextBlock 
+                Text="{Binding Timming , Converter={StaticResource TimeSpanConverter}}" 
+                Padding="10,0,10,0"></TextBlock>
+            <Button 
+                FontFamily="Segoe MDL2 Assets" Content="{Binding IsRunning, Converter={StaticResource IsRunningToIconConverter}}" 
+                Padding="10,0,10,0"
+                Height="20"
+                VerticalAlignment="Top"
+                >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseUp" >
+                        <i:InvokeCommandAction Command="{Binding StartStop}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </StackPanel>
+
+
         <TextBox  Grid.Row="0" 
                   Grid.Column="1"
-                  
                   Text="{Binding Description, Mode=TwoWay}" 
                   Height="Auto" 
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" ></TextBox>
 
-
-
         <StackPanel Name="Container"
                     Orientation="Vertical" 
-
+                    Margin="0,0,0,0"
                     Grid.Row="1" 
                     Grid.ColumnSpan="2"/>
 
