@@ -4,14 +4,36 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm ="clr-namespace:daily.UI.Infrastructure"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         vm:Locator.IsAutomaticLocator="True"
-
         xmlns:uc="clr-namespace:daily.UI.Views.Controls"
         mc:Ignorable="d"
-        Title="Daily Tasks" Height="450" Width="800">
-    <Grid>
-        <StackPanel Orientation="Horizontal" Name="Container">
-        </StackPanel>
-    </Grid>
+        Title="Daily Tasks" 
+        d:DesignHeight="800" d:DesignWidth="800">
 
+    <DockPanel>
+        
+        <TabControl Name="NavBar" 
+                DockPanel.Dock="Top">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged" >
+                    <i:InvokeCommandAction Command="{Binding OnSelectionChanged}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <TabItem Header="General"  >
+            </TabItem>
+            <TabItem Header="Security" />
+            <TabItem Header="Details" />
+        </TabControl>
+        
+        <ScrollViewer HorizontalScrollBarVisibility="Visible"
+                      VerticalScrollBarVisibility="Visible">
+            <StackPanel Name="Container"
+                        Orientation="Vertical" 
+                        Width="{Binding ContainerWidth}"
+                        DockPanel.Dock="Bottom"
+                        Margin="0,0,0,0"/>
+        </ScrollViewer>
+        
+    </DockPanel>
 </Window>

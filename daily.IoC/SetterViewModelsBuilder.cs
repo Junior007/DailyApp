@@ -12,11 +12,11 @@ namespace daily.IoC
             _container = container;
         }
 
-        public SetterServicesBuilder SetViewModels(IEnumerable<Type> viewTypes)
+        public SetterServicesBuilder SetViewModels(IEnumerable<Type> viewModelsTypes)
         {
-            foreach (var viewType in viewTypes)
+            foreach (var viewModelType in viewModelsTypes)
             {
-                _container.Services.AddSingleton(viewType);
+                _container.Services.AddTransient(viewModelType);
             }
             return new SetterServicesBuilder(_container);
         }

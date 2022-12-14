@@ -2,11 +2,15 @@
 {
     public class DailyTask
     {
-        internal delegate void TaskStartEventHandler(object sender, DailyTaskStartEventArgs e);
-        internal event TaskStartEventHandler TaskStartEvent;
+        public delegate void TaskStartEventHandler(object sender, DailyTaskStartEventArgs e);
+        public event TaskStartEventHandler TaskStartEvent;
+
+        public delegate void TaskStopEventHandler(object sender, DailyTaskStopEventArgs e);
+        public event TaskStopEventHandler TaskStopEvent;
 
         public string Title { get;  set; }
         public string Description { get;  set; }
+        public int Level { get; private set; }
         public List<Interval> Intervals { get; private set; }
         public List<DailyTask> SubTasks { get; private set; }
         public bool IsRunning => HasIntervals && Intervals.Any(i => i.IsOpen);
@@ -20,19 +24,20 @@
 
         public DailyTask()
         {
+            Level = 1;
             Intervals = new List<Interval>();
             SubTasks = new List<DailyTask>();
         }
         public void AddTask(DailyTask task)
         {
-            //TODO : en la creación también se a de atachar todos los eventos
+            //TODO : en la creación también se ha de atachar todos los eventos
             task.TaskStartEvent += (sender, e) => StartUp(sender as DailyTask);
             SubTasks.Add(task);
         }
 
         public void AddTask(string title, string description)
         {
-            DailyTask task = new DailyTask() { Title = title, Description = description };
+            DailyTask task = new DailyTask() { Title = title, Description = description, Level = Level +1 };
             AddTask(task);
         }
 
@@ -70,6 +75,7 @@
                 interval.Stop();
             }
 
+            TaskStopEvent?.Invoke(this, new DailyTaskStopEventArgs());
         }
     }
 }

@@ -6,9 +6,9 @@ using System.Windows.Controls;
 
 namespace daily.UI.Views.Controls
 {
-    public partial class DailyTaskDetail : UserControl
+    public partial class DailyTaskDetailView : UserControl
     {
-        public DailyTaskDetail()
+        public DailyTaskDetailView()
         {
             InitializeComponent();
         }

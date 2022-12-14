@@ -8,6 +8,17 @@ namespace daily.UI.ViewsModel
     internal abstract class AbstractViewModel : INotifyPropertyChanged
     {
 
+        public double ParentWidth
+        {
+            get => _width;
+            set
+            {
+                _width = value;
+                OnPropertyChanged();
+            }
+        }
+        private double _width;
+
         protected FrameworkElement _ownerView { get; set; }
         internal FrameworkElement OwnerView
         {
@@ -16,6 +27,19 @@ namespace daily.UI.ViewsModel
             {
                 _ownerView = value;
                 _ownerView.Loaded+=OnLoaded;
+                _ownerView.SizeChanged += OnResize;
+            }
+        }
+
+        protected virtual void OnResize(object sender, SizeChangedEventArgs e)
+        {
+            FrameworkElement parent = OwnerView.Parent as FrameworkElement;
+
+            double parentWidth = parent != null? parent.ActualWidth :Application.Current.MainWindow.ActualWidth;
+
+            if (e.WidthChanged)
+            {
+                ParentWidth = parentWidth;
             }
         }
 

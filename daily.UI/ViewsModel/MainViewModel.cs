@@ -3,6 +3,9 @@ using daily.domain.Models.Daily;
 using daily.UI.Commands;
 using daily.UI.Views.Controls;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,55 +14,113 @@ namespace daily.UI.ViewsModel
 {
     internal class MainViewModel : AbstractViewModel
     {
-        public DailyTask DailyWork
+
+        public ICommand OnSelectionChanged => onSelectionChanged;
+
+        public double ContainerWidth
         {
-            get => _dailyWork;
-            set
+            get => _containerWidth;
+            private set
             {
-                _dailyWork = value;
+                _containerWidth = value;
                 OnPropertyChanged();
             }
         }
-
-        public ICommand AddCommand { get => _addCommand; }
-        public ICommand DeleteCommand { get => _deleteCommand; }
-        public ICommand StartCommand { get => _startCommand; }
-        public ICommand StopCommand { get => _stopCommand; }
-
-        private DailyTask _dailyWork;
-
-        private ICommand _addCommand;
-        private ICommand _deleteCommand;
-        private ICommand _startCommand;
-        private ICommand _stopCommand;
-
-        private IDailyServices _dailyService;
-        private StackPanel stackPanelContainer;
-        private string Container = nameof(Container);
 
         public MainViewModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
 
-            _addCommand = new AddCommand();
-            _deleteCommand = new DeleteCommand();
-            _startCommand = new StartCommand();
-            _stopCommand = new StopCommand();
+            onSelectionChanged = new RelayCommand(changeDateTasksAction, value => true);
 
-            DailyWork = _dailyService.Get();
+            onResizeCompleted.Enabled = true;
+            onResizeCompleted.Elapsed += new ElapsedEventHandler(setSize);
+        }
+
+
+        private IDailyServices _dailyService;
+        private StackPanel stackPanelContainer;
+        private TabControl navBar;
+
+        private string Container = nameof(Container);
+        private string NavBar = nameof(NavBar);
+
+        private double _containerWidth;
+        private Timer onResizeCompleted = new Timer(250);
+
+
+        private ICommand onSelectionChanged;
+
+        private void changeDateTasksAction(object obj)
+        {
+            TabItem tab = (TabItem)navBar.SelectedItem;
+            string lookfor = (string)tab.Header;
+
+            AddSubtasks(OwnerView as FrameworkElement, lookfor);
         }
 
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
-            DailyTaskDetail dailyTaskDetail = new DailyTaskDetail();
-            FrameworkElement view = sender as FrameworkElement;
-            stackPanelContainer = view?.FindName(Container) as StackPanel;
+            base.OnLoaded(sender, e);
+            AddTabs(sender as FrameworkElement);
+            AddSubtasks(sender as FrameworkElement);
+        }
+
+        protected override void OnResize(object sender, SizeChangedEventArgs e)
+        {
+            onResizeCompleted.Stop();
+            base.OnResize(sender, e);
+            onResizeCompleted.Start();
+        }
+
+        private void setSize(object? sender, ElapsedEventArgs e)
+        {
+            onResizeCompleted.Stop();
+            ContainerWidth = ParentWidth-40;
+        }
+
+        private void AddTabs(FrameworkElement? frameworkElement)
+        {
+            FrameworkElement thisView = frameworkElement as FrameworkElement;
+            navBar = thisView?.FindName(NavBar) as TabControl;
+
+            IList<DailyTask> week = _dailyService.GetWeek();
+            navBar.Items.Clear();
+
+            foreach (var daily in week)
+            {
+                TabItem item = new TabItem
+                {
+                    Header = daily.Title
+                };
+                navBar.Items.Add(item);
+            }
+        }
+
+        private void AddSubtasks(FrameworkElement? frameworkElement)
+        {
+            FrameworkElement thisView = frameworkElement as FrameworkElement;
+            stackPanelContainer = thisView?.FindName(Container) as StackPanel;
+
+            DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
+            DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
+            dailyTaskDetailModel.DailyTask = _dailyService.Get();
             stackPanelContainer.Children.Clear();
-            stackPanelContainer.Children.Add(dailyTaskDetail);
+            stackPanelContainer.Children.Add(userControlDailyTaskDetail);
+        }
 
-            DailyTaskDetailModel ucModelView = dailyTaskDetail.DataContext as DailyTaskDetailModel;
+        private void AddSubtasks(FrameworkElement frameworkElement, string lookfor)
+        {
+            FrameworkElement thisView = frameworkElement as FrameworkElement;
+            stackPanelContainer = thisView?.FindName(Container) as StackPanel;
 
-            ucModelView.DailyTask = _dailyService.Get();
+            DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
+            DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
+            DateTime dateTime;
+            DateTime.TryParse(lookfor, out dateTime);
+            dailyTaskDetailModel.DailyTask = _dailyService.Get(dateTime);
+            stackPanelContainer.Children.Clear();
+            stackPanelContainer.Children.Add(userControlDailyTaskDetail);
         }
     }
 }

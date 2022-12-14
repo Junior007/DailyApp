@@ -17,10 +17,10 @@ namespace daily.UI
         }
         private void OnStartup(object sender, StartupEventArgs e)
         {
-            IEnumerable<Type> viewTypes = GetViewModels.Types();
+            IEnumerable<Type> viewModelsTypes = GetViewModels.Types();
             ServiceProvider serviceProvider = DependencyBuilder
                 .SetMainView<MainView>()
-                .SetViewModels(viewTypes)
+                .SetViewModels(viewModelsTypes)
                 .SetServices()
                 .Build();
 
