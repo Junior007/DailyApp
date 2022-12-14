@@ -10,7 +10,6 @@
 
         public string Title { get;  set; }
         public string Description { get;  set; }
-        public int Level { get; private set; }
         public List<Interval> Intervals { get; private set; }
         public List<DailyTask> SubTasks { get; private set; }
         public bool IsRunning => HasIntervals && Intervals.Any(i => i.IsOpen);
@@ -24,7 +23,6 @@
 
         public DailyTask()
         {
-            Level = 1;
             Intervals = new List<Interval>();
             SubTasks = new List<DailyTask>();
         }
@@ -37,7 +35,7 @@
 
         public void AddTask(string title, string description)
         {
-            DailyTask task = new DailyTask() { Title = title, Description = description, Level = Level +1 };
+            DailyTask task = new DailyTask() { Title = title, Description = description };
             AddTask(task);
         }
 

@@ -63,7 +63,11 @@ namespace daily.UI.ViewsModel
         {
             base.OnLoaded(sender, e);
             AddTabs(sender as FrameworkElement);
-            AddSubtasks(sender as FrameworkElement);
+
+            TabItem tab = (TabItem)navBar.SelectedItem;
+            string lookfor = (string)tab.Header;
+
+            AddSubtasks(sender as FrameworkElement, lookfor);
         }
 
         protected override void OnResize(object sender, SizeChangedEventArgs e)
@@ -76,7 +80,7 @@ namespace daily.UI.ViewsModel
         private void setSize(object? sender, ElapsedEventArgs e)
         {
             onResizeCompleted.Stop();
-            ContainerWidth = ParentWidth-40;
+            ContainerWidth = ParentWidth - 40;
         }
 
         private void AddTabs(FrameworkElement? frameworkElement)
@@ -97,30 +101,27 @@ namespace daily.UI.ViewsModel
             }
         }
 
-        private void AddSubtasks(FrameworkElement? frameworkElement)
-        {
-            FrameworkElement thisView = frameworkElement as FrameworkElement;
-            stackPanelContainer = thisView?.FindName(Container) as StackPanel;
-
-            DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
-            DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
-            dailyTaskDetailModel.DailyTask = _dailyService.Get();
-            stackPanelContainer.Children.Clear();
-            stackPanelContainer.Children.Add(userControlDailyTaskDetail);
-        }
-
         private void AddSubtasks(FrameworkElement frameworkElement, string lookfor)
         {
             FrameworkElement thisView = frameworkElement as FrameworkElement;
             stackPanelContainer = thisView?.FindName(Container) as StackPanel;
 
-            DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
-            DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
             DateTime dateTime;
             DateTime.TryParse(lookfor, out dateTime);
-            dailyTaskDetailModel.DailyTask = _dailyService.Get(dateTime);
+            var tasks = _dailyService.Get(dateTime);
+
             stackPanelContainer.Children.Clear();
-            stackPanelContainer.Children.Add(userControlDailyTaskDetail);
+            if (tasks?.SubTasks?.Count > 0)
+            {
+                foreach (var task in tasks.SubTasks)
+                {
+                    DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
+                    DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
+                    dailyTaskDetailModel.DailyTask = task;
+                    stackPanelContainer.Children.Add(userControlDailyTaskDetail);
+                }
+            }
+
         }
     }
 }

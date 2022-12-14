@@ -26,8 +26,6 @@ namespace daily.UI.ViewsModel
             }
         }
 
-        public int Level { get=> _dailyTask.Level;  }  
-
         public string Title
         {
             get => _title;
@@ -153,9 +151,9 @@ namespace daily.UI.ViewsModel
             }
         }
 
-
         private void setTimming()
-        {
+        {//TODO -  pensar en timmer único en la vista principaloki
+
             lock (_dailyTask.Intervals)
             {
                 long ticks = _dailyTask.Intervals.Where(i => i.IsClose).Select(i => (TimeSpan)(i.End - i.Init)).Sum(ts => ts.Ticks);
