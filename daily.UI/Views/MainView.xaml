@@ -6,13 +6,20 @@
         xmlns:vm ="clr-namespace:daily.UI.Infrastructure"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         vm:Locator.IsAutomaticLocator="True"
-        xmlns:uc="clr-namespace:daily.UI.Views.Controls"
+        xmlns:uc="clr-namespace:daily.UI.Views.Controls" 
+        xmlns:converters="clr-namespace:daily.UI.Converters"
         mc:Ignorable="d"
         Title="Daily Tasks" 
         d:DesignHeight="800" d:DesignWidth="800">
 
+    <Window.Resources>
+        <converters:IsRunningToIconConverter x:Key="IsRunningToIconConverter" />
+        <converters:IsRunningToBackgroundConverter x:Key="IsRunningToBackgroundConverter" />
+        <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
+    </Window.Resources>
+
     <DockPanel>
-        
+
         <TabControl Name="NavBar" 
                 DockPanel.Dock="Top">
             <i:Interaction.Triggers>
@@ -25,15 +32,17 @@
             <TabItem Header="Security" />
             <TabItem Header="Details" />
         </TabControl>
-        
-        <ScrollViewer HorizontalScrollBarVisibility="Visible"
-                      VerticalScrollBarVisibility="Visible">
-            <StackPanel Name="Container"
+
+
+            <ScrollViewer HorizontalScrollBarVisibility="Visible"
+                          VerticalScrollBarVisibility="Visible"
+                          DockPanel.Dock="Top">
+                <StackPanel Name="Container"
                         Orientation="Vertical" 
                         Width="{Binding ContainerWidth}"
-                        DockPanel.Dock="Bottom"
-                        Margin="0,0,0,0"/>
-        </ScrollViewer>
-        
-    </DockPanel>
+                        Margin="0,0,0,0"
+                        />
+           </ScrollViewer>
+
+   </DockPanel>
 </Window>

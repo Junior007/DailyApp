@@ -13,7 +13,7 @@ using System.Timers;
 
 namespace daily.UI.ViewsModel
 {
-    internal class DailyTaskDetailViewModel : AbstractViewModel
+    internal abstract class AbstractDailyTaskDetailViewModel : AbstractViewModel
     {
 
         public TimeSpan Timming
@@ -25,8 +25,6 @@ namespace daily.UI.ViewsModel
                 OnPropertyChanged();
             }
         }
-
-        public int Level { get=> _dailyTask.Level;  }  
 
         public string Title
         {
@@ -75,20 +73,20 @@ namespace daily.UI.ViewsModel
 
         public ICommand StartStop => startStop;
 
-        private DailyTask _dailyTask;
-        private string _title;
-        private string _description;
-        private bool _isRunning;
-        private TimeSpan _timming = DateTime.Now - DateTime.Now;
+        protected DailyTask _dailyTask;
+        protected string _title;
+        protected string _description;
+        protected bool _isRunning;
+        protected TimeSpan _timming = DateTime.Now - DateTime.Now;
 
-        private IDailyServices _dailyService;
-        private StackPanel stackPanelContainer;
-        private string Container = nameof(Container);
-        private ICommand startStop;
+        protected IDailyServices _dailyService;
+        protected StackPanel stackPanelContainer;
+        protected string Container = nameof(Container);
+        protected ICommand startStop;
 
-        private Timer refreshTimming = new Timer(30000);
+        protected Timer refreshTimming = new Timer(30000);
 
-        public DailyTaskDetailViewModel(IDailyServices dailyService)
+        public AbstractDailyTaskDetailViewModel(IDailyServices dailyService)
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
             startStop = new RelayCommand(startStopAction, value => true);
@@ -99,7 +97,7 @@ namespace daily.UI.ViewsModel
 
         }
 
-        private void startStopAction(object obj)
+        protected void startStopAction(object obj)
         {
             if (DailyTask.IsRunning)
                 DailyTask.Stop();
@@ -113,7 +111,7 @@ namespace daily.UI.ViewsModel
             AddSubtaskViews(sender as FrameworkElement);
         }
 
-        private void SetDailyTask(DailyTask value)
+        protected void SetDailyTask(DailyTask value)
         {
             _dailyTask = value;
             _title = _dailyTask.Title;
@@ -130,32 +128,16 @@ namespace daily.UI.ViewsModel
             _dailyTask.TaskStopEvent += OnChangeTaskState;
         }
 
-        private void OnChangeTaskState(object sender, Object e)
+        protected void OnChangeTaskState(object sender, Object e)
         {
             IsRunning = _dailyTask.IsRunning;
         }
 
-        private void AddSubtaskViews(FrameworkElement? frameworkElement)
-        {
-            if (SubTasks?.Count > 0)
-            {
+        protected abstract void AddSubtaskViews(FrameworkElement? frameworkElement);
 
-                FrameworkElement thisView = frameworkElement as FrameworkElement;
-                stackPanelContainer = thisView?.FindName(Container) as StackPanel;
+        protected void setTimming()
+        {//TODO -  pensar en timmer único en la vista principaloki
 
-                foreach (var task in SubTasks)
-                {
-                    DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
-                    DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
-                    dailyTaskDetailModel.DailyTask = task;
-                    stackPanelContainer.Children.Add(userControlDailyTaskDetail);
-                }
-            }
-        }
-
-
-        private void setTimming()
-        {
             lock (_dailyTask.Intervals)
             {
                 long ticks = _dailyTask.Intervals.Where(i => i.IsClose).Select(i => (TimeSpan)(i.End - i.Init)).Sum(ts => ts.Ticks);

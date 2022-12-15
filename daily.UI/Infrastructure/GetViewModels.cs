@@ -14,12 +14,12 @@ namespace daily.Infrastructure
         {
             if (_views == null)
             {
-                var type = typeof(AbstractViewModel);
+                var baseType = typeof(AbstractViewModel);
 
                 Assembly assembly = Assembly.GetAssembly(typeof(GetViewModels));
                 _views = assembly
                     .GetTypes()
-                    .Where(types => types.Name != type.Name && types.IsAssignableTo(type));
+                    .Where(modelViewType => modelViewType.IsAssignableTo(baseType) && !modelViewType.IsAbstract);
             }
             return _views;
         }
