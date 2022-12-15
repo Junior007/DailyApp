@@ -58,7 +58,11 @@
                 Padding="10,0,10,0"
                 Height="20"
                 VerticalAlignment="Top">
-
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseUp" >
+                        <i:InvokeCommandAction Command="{Binding OnButtonClickAddTask}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
 
         </StackPanel>

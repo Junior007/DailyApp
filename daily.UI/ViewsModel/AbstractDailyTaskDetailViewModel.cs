@@ -72,6 +72,7 @@ namespace daily.UI.ViewsModel
         }
 
         public ICommand StartStop => startStop;
+        public ICommand OnButtonClickAddTask => onButtonClickAddTask;
 
         protected DailyTask _dailyTask;
         protected string _title;
@@ -83,6 +84,7 @@ namespace daily.UI.ViewsModel
         protected StackPanel stackPanelContainer;
         protected string Container = nameof(Container);
         protected ICommand startStop;
+        protected ICommand onButtonClickAddTask;
 
         protected Timer refreshTimming = new Timer(30000);
 
@@ -90,11 +92,22 @@ namespace daily.UI.ViewsModel
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
             startStop = new RelayCommand(startStopAction, value => true);
-
+            onButtonClickAddTask = new RelayCommand(showAddTaskModal, value => true);
 
             refreshTimming.Enabled = true;
             refreshTimming.Elapsed += new ElapsedEventHandler((object? sender, ElapsedEventArgs e) => setTimming());
 
+        }
+
+        protected void showAddTaskModal(object obj)
+        {
+            Window window = new Window
+            {
+                Title = "My User Control Dialog",
+                Content = new AddTaskDialogView()
+            };
+
+            window.ShowDialog();
         }
 
         protected void startStopAction(object obj)
