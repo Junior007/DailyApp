@@ -8,14 +8,14 @@
         public delegate void TaskStopEventHandler(object sender, DailyTaskStopEventArgs e);
         public event TaskStopEventHandler TaskStopEvent;
 
-        public string Title { get;  set; }
-        public string Description { get;  set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
         public List<Interval> Intervals { get; private set; }
         public List<DailyTask> SubTasks { get; private set; }
         public bool IsRunning => HasIntervals && Intervals.Any(i => i.IsOpen);
         public bool HasIntervals => Intervals.Count > 0;
-
-        public DailyTask(string title, string description):this()
+        public Guid Id { get; private set; }
+        public DailyTask(string title, string description) : this()
         {
             Title = title;
             Description = description;
@@ -23,8 +23,17 @@
 
         public DailyTask()
         {
+            Id = Guid.NewGuid();
             Intervals = new List<Interval>();
             SubTasks = new List<DailyTask>();
+        }
+
+
+        public void DeleteTask(Guid id)
+        {
+            var dailyTask = SubTasks.Find(i => i.Id == id);
+            if (dailyTask != null)
+                SubTasks.Remove(dailyTask);
         }
         public void AddTask(DailyTask task)
         {
@@ -61,7 +70,7 @@
         private void StopDown(DailyTask taskRaisedStartEvent)
         {
             //Stop childs
-            IEnumerable<DailyTask> subTasks = SubTasks.Where(t => taskRaisedStartEvent==null || t != taskRaisedStartEvent);
+            IEnumerable<DailyTask> subTasks = SubTasks.Where(t => taskRaisedStartEvent == null || t != taskRaisedStartEvent);
             foreach (var subTask in subTasks)
             {
                 subTask.Stop();

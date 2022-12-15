@@ -67,7 +67,7 @@
                 VerticalAlignment="Top">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseUp" >
-                        <i:InvokeCommandAction Command="{Binding OnButtonClickDeleteTask}" />
+                        <i:InvokeCommandAction Command="{Binding OnButtonClickDeleteTask}" CommandParameter="{Binding Id}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>

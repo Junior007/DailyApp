@@ -29,6 +29,8 @@ namespace daily.UI.ViewsModel
                     SecondLevelTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as SecondLevelTaskDetailViewModel;
                     dailyTaskDetailModel.DailyTask = task;
                     stackPanelContainer.Children.Add(userControlDailyTaskDetail);
+
+                    dailyTaskDetailModel.DeleteTaskEvent += (sender, id) => DeleteSubTask(id);
                 }
             }
         }

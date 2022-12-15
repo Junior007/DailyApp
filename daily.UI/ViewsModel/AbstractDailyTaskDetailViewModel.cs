@@ -60,7 +60,7 @@ namespace daily.UI.ViewsModel
         }
         public List<DailyTask> SubTasks
         {
-            get=>_dailyTask.SubTasks;
+            get => _dailyTask.SubTasks;
         }
 
         public DailyTask DailyTask
@@ -72,13 +72,26 @@ namespace daily.UI.ViewsModel
             }
         }
 
+        public Guid Id
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                OnPropertyChanged();
+            }
+        }
         public ICommand StartStop => startStop;
         public ICommand OnButtonClickAddTask => onButtonClickAddTask;
         public ICommand OnButtonClickDeleteTask => onButtonClickDeleteTask;
+        
+        public delegate void DeleteTaskEventHandler(object sender, Guid id);
+        public event DeleteTaskEventHandler DeleteTaskEvent;
 
         protected DailyTask _dailyTask;
         protected string _title;
         protected string _description;
+        protected Guid _id;
         protected bool _isRunning;
         protected TimeSpan _timming = DateTime.Now - DateTime.Now;
 
@@ -106,7 +119,9 @@ namespace daily.UI.ViewsModel
 
         private void deleteTaskAction(object obj)
         {
-            //DeleteTask(DailyTask task)
+            
+            Guid id = (Guid)obj ;
+            DeleteTaskEvent?.Invoke(this, id);
         }
 
         private void addTaskAction(object obj)
@@ -142,11 +157,10 @@ namespace daily.UI.ViewsModel
         protected void SetDailyTask(DailyTask value)
         {
             _dailyTask = value;
-            _title = _dailyTask.Title;
-            _description = _dailyTask.Description;
+            Title = _dailyTask.Title;
+            Description = _dailyTask.Description;
+            Id = _dailyTask.Id;
 
-            OnPropertyChanged(nameof(Title));
-            OnPropertyChanged(nameof(Description));
             _dailyTask.TaskStartEvent += OnChangeTaskState;
             _dailyTask.TaskStopEvent += OnChangeTaskState;
         }
@@ -156,9 +170,11 @@ namespace daily.UI.ViewsModel
             DailyTask.AddTask(subTask);
             RefreshSubtaskViews(this.OwnerView as FrameworkElement);
         }
-        protected void DeleteTask(DailyTask task)
-        {
 
+        protected void DeleteSubTask(Guid id)
+        {
+            DailyTask.DeleteTask(id);
+            RefreshSubtaskViews(this.OwnerView);
         }
 
         protected void OnChangeTaskState(object sender, Object e)

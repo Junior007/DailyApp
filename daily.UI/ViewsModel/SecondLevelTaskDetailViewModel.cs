@@ -1,4 +1,5 @@
 ﻿using daily.application.Services;
+using daily.domain.Models.Daily;
 using daily.UI.Views.Controls;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +19,6 @@ namespace daily.UI.ViewsModel
         {
             if (SubTasks?.Count > 0)
             {
-
                 FrameworkElement thisView = frameworkElement as FrameworkElement;
                 stackPanelContainer = thisView?.FindName(Container) as StackPanel;
                 stackPanelContainer.Children.Clear();
@@ -29,6 +29,8 @@ namespace daily.UI.ViewsModel
                     ThirdLevelTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as ThirdLevelTaskDetailViewModel;
                     dailyTaskDetailModel.DailyTask = task;
                     stackPanelContainer.Children.Add(userControlDailyTaskDetail);
+
+                    dailyTaskDetailModel.DeleteTaskEvent+= (sender, id) => DeleteSubTask(id);
                 }
             }
         }
