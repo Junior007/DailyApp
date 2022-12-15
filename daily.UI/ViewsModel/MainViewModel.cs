@@ -111,16 +111,11 @@ namespace daily.UI.ViewsModel
             DailyTask mainTask = _dailyService.Get(dateTime);
 
             stackPanelContainer.Children.Clear();
-            /*if (mainTask?.SubTasks?.Count > 0)
-            {
-                foreach (var task in mainTask.SubTasks)
-                {*/
-                    DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
-                    DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
-                    dailyTaskDetailModel.DailyTask = mainTask;
-                    stackPanelContainer.Children.Add(userControlDailyTaskDetail);
-                /*}
-            }*/
+
+            MainDailyTaskDetailView userControlDailyTaskDetail = new MainDailyTaskDetailView();
+            MainDailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as MainDailyTaskDetailViewModel;
+            dailyTaskDetailModel.DailyTask = mainTask;
+            stackPanelContainer.Children.Add(userControlDailyTaskDetail);
 
         }
     }

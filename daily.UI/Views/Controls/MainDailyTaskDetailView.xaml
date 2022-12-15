@@ -69,7 +69,9 @@
                   Height="Auto" 
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 
-                  Margin="0,2,0,0"></TextBox>
+                  Margin="0,2,0,0"
+                  IsEnabled="False"
+                  Background="Azure"></TextBox>
 
         <StackPanel Name="Container"
                     Orientation="Vertical" 
