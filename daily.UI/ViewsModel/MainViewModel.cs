@@ -108,19 +108,19 @@ namespace daily.UI.ViewsModel
 
             DateTime dateTime;
             DateTime.TryParse(lookfor, out dateTime);
-            var tasks = _dailyService.Get(dateTime);
+            DailyTask mainTask = _dailyService.Get(dateTime);
 
             stackPanelContainer.Children.Clear();
-            if (tasks?.SubTasks?.Count > 0)
+            /*if (mainTask?.SubTasks?.Count > 0)
             {
-                foreach (var task in tasks.SubTasks)
-                {
+                foreach (var task in mainTask.SubTasks)
+                {*/
                     DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
                     DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
-                    dailyTaskDetailModel.DailyTask = task;
+                    dailyTaskDetailModel.DailyTask = mainTask;
                     stackPanelContainer.Children.Add(userControlDailyTaskDetail);
-                }
-            }
+                /*}
+            }*/
 
         }
     }
