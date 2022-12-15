@@ -69,7 +69,7 @@
                   Height="Auto" 
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 
-                  Margin="0,2,0,0"></TextBox>
+                  Margin="40,2,0,0"></TextBox>
 
         <StackPanel Name="Container"
                     Orientation="Vertical" 

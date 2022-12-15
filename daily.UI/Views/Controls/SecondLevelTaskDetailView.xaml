@@ -18,7 +18,8 @@
     </UserControl.Resources>
 
     <Grid  Width="Auto"                 
-           HorizontalAlignment="Stretch">
+           HorizontalAlignment="Stretch"
+           Margin="0,10,0,5">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="135"></ColumnDefinition>
@@ -69,15 +70,13 @@
                   Height="Auto" 
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 
-                  Margin="0,2,0,0"></TextBox>
+                  Margin="20,2,0,0"></TextBox>
 
         <StackPanel Name="Container"
                     Orientation="Vertical" 
-                    Margin="0,0,0,0"
+                    Margin="0,2,0,2"
                     Grid.Row="1" 
-                    Grid.ColumnSpan="2"
-                    
-                    Background="AntiqueWhite"/>
+                    Grid.ColumnSpan="2"/>
 
     </Grid>
 </UserControl>
