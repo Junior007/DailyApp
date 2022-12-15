@@ -58,10 +58,9 @@ namespace daily.UI.ViewsModel
             }
 
         }
-        public ObservableCollection<DailyTask> SubTasks
+        public List<DailyTask> SubTasks
         {
-            get;
-            set;
+            get=>_dailyTask.SubTasks;
         }
 
         public DailyTask DailyTask
@@ -145,11 +144,6 @@ namespace daily.UI.ViewsModel
             _dailyTask = value;
             _title = _dailyTask.Title;
             _description = _dailyTask.Description;
-            SubTasks = new ObservableCollection<DailyTask>();
-            foreach (var subTask in _dailyTask.SubTasks)
-            {
-                SubTasks.Add(subTask);
-            }
 
             OnPropertyChanged(nameof(Title));
             OnPropertyChanged(nameof(Description));
@@ -160,7 +154,6 @@ namespace daily.UI.ViewsModel
         {
             DailyTask subTask = new DailyTask();
             DailyTask.AddTask(subTask);
-            SubTasks.Add(subTask);
             RefreshSubtaskViews(this.OwnerView as FrameworkElement);
         }
         protected void DeleteTask(DailyTask task)
@@ -176,7 +169,7 @@ namespace daily.UI.ViewsModel
         protected abstract void RefreshSubtaskViews(FrameworkElement? frameworkElement);
 
         protected void setTimming()
-        {//TODO -  pensar en timmer único en la vista principaloki
+        {//TODO -  pensar en timmer único en la vista principal
 
             lock (_dailyTask.Intervals)
             {
