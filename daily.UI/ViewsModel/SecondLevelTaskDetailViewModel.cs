@@ -5,11 +5,11 @@ using System.Windows.Controls;
 
 namespace daily.UI.ViewsModel
 {
-    internal class MainDailyTaskDetailViewModel : AbstractDailyTaskDetailViewModel
+    internal class SecondLevelTaskDetailViewModel : AbstractDailyTaskDetailViewModel
     {
 
 
-        public MainDailyTaskDetailViewModel(IDailyServices dailyService) : base(dailyService)
+        public SecondLevelTaskDetailViewModel(IDailyServices dailyService) : base(dailyService)
         {
 
         }
@@ -24,8 +24,8 @@ namespace daily.UI.ViewsModel
 
                 foreach (var task in SubTasks)
                 {
-                    DailyTaskDetailView userControlDailyTaskDetail = new DailyTaskDetailView();
-                    DailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as DailyTaskDetailViewModel;
+                    SecondLevelTaskDetailView userControlDailyTaskDetail = new SecondLevelTaskDetailView();
+                    SecondLevelTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as SecondLevelTaskDetailViewModel;
                     dailyTaskDetailModel.DailyTask = task;
                     stackPanelContainer.Children.Add(userControlDailyTaskDetail);
                 }

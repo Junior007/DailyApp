@@ -112,8 +112,8 @@ namespace daily.UI.ViewsModel
 
             stackPanelContainer.Children.Clear();
 
-            MainDailyTaskDetailView userControlDailyTaskDetail = new MainDailyTaskDetailView();
-            MainDailyTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as MainDailyTaskDetailViewModel;
+            FirstLevelTaskDetailView userControlDailyTaskDetail = new FirstLevelTaskDetailView();
+            FirstLevelTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as FirstLevelTaskDetailViewModel;
             dailyTaskDetailModel.DailyTask = mainTask;
             stackPanelContainer.Children.Add(userControlDailyTaskDetail);
 

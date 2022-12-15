@@ -18,9 +18,9 @@ namespace daily.UI.Views.Controls
     /// <summary>
     /// Lógica de interacción para MainDailyTaskDetailView.xaml
     /// </summary>
-    public partial class MainDailyTaskDetailView : UserControl
+    public partial class FirstLevelTaskDetailView : UserControl
     {
-        public MainDailyTaskDetailView()
+        public FirstLevelTaskDetailView()
         {
             InitializeComponent();
         }
