@@ -31,4 +31,10 @@
     <Folder Include="ViewsModel\Infrastructure\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\Controls\ThirdLevelTaskDetailView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>
