@@ -14,13 +14,14 @@ namespace daily.UI.ViewsModel
 
         }
 
-        protected override void AddSubtaskViews(FrameworkElement? frameworkElement)
+        protected override void RefreshSubtaskViews(FrameworkElement? frameworkElement)
         {
             if (SubTasks?.Count > 0)
             {
 
                 FrameworkElement thisView = frameworkElement as FrameworkElement;
                 stackPanelContainer = thisView?.FindName(Container) as StackPanel;
+                stackPanelContainer.Children.Clear();
 
                 foreach (var task in SubTasks)
                 {
@@ -28,6 +29,8 @@ namespace daily.UI.ViewsModel
                     SecondLevelTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as SecondLevelTaskDetailViewModel;
                     dailyTaskDetailModel.DailyTask = task;
                     stackPanelContainer.Children.Add(userControlDailyTaskDetail);
+
+                    dailyTaskDetailModel.DeleteTaskEvent += (sender, id) => DeleteSubTask(id);
                 }
             }
         }

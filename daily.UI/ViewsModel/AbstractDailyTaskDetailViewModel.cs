@@ -10,6 +10,8 @@ using System.Windows.Input;
 using daily.UI.Commands;
 using System.Collections.Generic;
 using System.Timers;
+using System.Threading.Tasks;
+using System.Reflection;
 
 namespace daily.UI.ViewsModel
 {
@@ -56,10 +58,9 @@ namespace daily.UI.ViewsModel
             }
 
         }
-        public ObservableCollection<DailyTask> SubTasks
+        public List<DailyTask> SubTasks
         {
-            get;
-            set;
+            get => _dailyTask.SubTasks;
         }
 
         public DailyTask DailyTask
@@ -71,11 +72,26 @@ namespace daily.UI.ViewsModel
             }
         }
 
+        public Guid Id
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                OnPropertyChanged();
+            }
+        }
         public ICommand StartStop => startStop;
+        public ICommand OnButtonClickAddTask => onButtonClickAddTask;
+        public ICommand OnButtonClickDeleteTask => onButtonClickDeleteTask;
+        
+        public delegate void DeleteTaskEventHandler(object sender, Guid id);
+        public event DeleteTaskEventHandler DeleteTaskEvent;
 
         protected DailyTask _dailyTask;
         protected string _title;
         protected string _description;
+        protected Guid _id;
         protected bool _isRunning;
         protected TimeSpan _timming = DateTime.Now - DateTime.Now;
 
@@ -83,6 +99,8 @@ namespace daily.UI.ViewsModel
         protected StackPanel stackPanelContainer;
         protected string Container = nameof(Container);
         protected ICommand startStop;
+        protected ICommand onButtonClickAddTask;
+        protected ICommand onButtonClickDeleteTask;
 
         protected Timer refreshTimming = new Timer(30000);
 
@@ -90,11 +108,36 @@ namespace daily.UI.ViewsModel
         {
             _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
             startStop = new RelayCommand(startStopAction, value => true);
-
+            //onButtonClickAddTask = new RelayCommand(showAddTaskModal, value => true);
+            onButtonClickAddTask = new RelayCommand(addTaskAction, value => true);
+            onButtonClickDeleteTask = new RelayCommand(deleteTaskAction, value => true);
 
             refreshTimming.Enabled = true;
             refreshTimming.Elapsed += new ElapsedEventHandler((object? sender, ElapsedEventArgs e) => setTimming());
 
+        }
+
+        private void deleteTaskAction(object obj)
+        {
+            
+            Guid id = (Guid)obj ;
+            DeleteTaskEvent?.Invoke(this, id);
+        }
+
+        private void addTaskAction(object obj)
+        {
+            AddTask();
+        }
+
+        protected void showAddTaskModal(object obj)
+        {
+            Window window = new Window
+            {
+                Title = "My User Control Dialog",
+                Content = new AddTaskDialogView()
+            };
+
+            window.ShowDialog();
         }
 
         protected void startStopAction(object obj)
@@ -108,24 +151,30 @@ namespace daily.UI.ViewsModel
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
             base.OnLoaded(sender, e);
-            AddSubtaskViews(sender as FrameworkElement);
+            RefreshSubtaskViews(sender as FrameworkElement);
         }
 
         protected void SetDailyTask(DailyTask value)
         {
             _dailyTask = value;
-            _title = _dailyTask.Title;
-            _description = _dailyTask.Description;
-            SubTasks = new ObservableCollection<DailyTask>();
-            foreach (var subTask in _dailyTask.SubTasks)
-            {
-                SubTasks.Add(subTask);
-            }
+            Title = _dailyTask.Title;
+            Description = _dailyTask.Description;
+            Id = _dailyTask.Id;
 
-            OnPropertyChanged(nameof(Title));
-            OnPropertyChanged(nameof(Description));
             _dailyTask.TaskStartEvent += OnChangeTaskState;
             _dailyTask.TaskStopEvent += OnChangeTaskState;
+        }
+        protected void AddTask()
+        {
+            DailyTask subTask = new DailyTask();
+            DailyTask.AddTask(subTask);
+            RefreshSubtaskViews(this.OwnerView as FrameworkElement);
+        }
+
+        protected void DeleteSubTask(Guid id)
+        {
+            DailyTask.DeleteTask(id);
+            RefreshSubtaskViews(this.OwnerView);
         }
 
         protected void OnChangeTaskState(object sender, Object e)
@@ -133,10 +182,10 @@ namespace daily.UI.ViewsModel
             IsRunning = _dailyTask.IsRunning;
         }
 
-        protected abstract void AddSubtaskViews(FrameworkElement? frameworkElement);
+        protected abstract void RefreshSubtaskViews(FrameworkElement? frameworkElement);
 
         protected void setTimming()
-        {//TODO -  pensar en timmer único en la vista principaloki
+        {//TODO -  pensar en timmer único en la vista principal
 
             lock (_dailyTask.Intervals)
             {
