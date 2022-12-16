@@ -4,6 +4,7 @@ using daily.UI.Commands;
 using daily.UI.Views.Controls;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Timers;
 using System.Windows;
@@ -15,6 +16,7 @@ namespace daily.UI.ViewsModel
     internal class MainViewModel : AbstractViewModel
     {
 
+        private string _dateTimeFormat = "dd-MM-yyyy";
         public ICommand OnSelectionChanged => onSelectionChanged;
 
         public double ContainerWidth
@@ -56,7 +58,7 @@ namespace daily.UI.ViewsModel
             TabItem tab = (TabItem)navBar.SelectedItem;
             string lookfor = (string)tab.Header;
 
-            AddSubtasks(OwnerView as FrameworkElement, lookfor);
+            AddSubtasks(lookfor);
         }
 
         protected override void OnLoaded(object sender, RoutedEventArgs e)
@@ -64,10 +66,10 @@ namespace daily.UI.ViewsModel
             base.OnLoaded(sender, e);
             AddTabs(sender as FrameworkElement);
 
-            TabItem tab = (TabItem)navBar.SelectedItem;
-            string lookfor = (string)tab.Header;
-
-            AddSubtasks(sender as FrameworkElement, lookfor);
+            TabItem tab = (TabItem)navBar?.SelectedItem;
+            string lookfor = (string)tab?.Header;
+            if (lookfor != null)
+                AddSubtasks(lookfor);
         }
 
         protected override void OnResize(object sender, SizeChangedEventArgs e)
@@ -95,19 +97,23 @@ namespace daily.UI.ViewsModel
             {
                 TabItem item = new TabItem
                 {
-                    Header = daily.Title
+                    Header = daily.Date.ToString(_dateTimeFormat)
                 };
                 navBar.Items.Add(item);
             }
         }
 
-        private void AddSubtasks(FrameworkElement frameworkElement, string lookfor)
+        private void AddSubtasks(string lookfor)
         {
-            FrameworkElement thisView = frameworkElement as FrameworkElement;
-            stackPanelContainer = thisView?.FindName(Container) as StackPanel;
+            stackPanelContainer = this.OwnerView?.FindName(Container) as StackPanel;
 
             DateTime dateTime;
-            DateTime.TryParse(lookfor, out dateTime);
+            DateTime.TryParseExact(lookfor,
+                       _dateTimeFormat,
+                       CultureInfo.InvariantCulture,
+                       DateTimeStyles.None,
+                       out dateTime);
+
             DailyTask mainTask = _dailyService.Get(dateTime);
 
             stackPanelContainer.Children.Clear();

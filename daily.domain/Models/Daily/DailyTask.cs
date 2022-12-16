@@ -10,9 +10,10 @@ namespace daily.domain.Models.Daily
 
         public delegate void TaskStopEventHandler(object sender, DailyTaskStopEventArgs e);
         public event TaskStopEventHandler TaskStopEvent;
-
         public string Title { get; set; }
         public string Description { get; set; }
+        [JsonInclude]
+        public DateTime Date { get; private set; }
         [JsonInclude]
         public List<Interval> Intervals { get; private set; }
         [JsonInclude]
@@ -29,6 +30,7 @@ namespace daily.domain.Models.Daily
         public DailyTask()
         {
             Id = Guid.NewGuid();
+            Date = DateTime.Now;
             Intervals = new List<Interval>();
             SubTasks = new List<DailyTask>();
         }

@@ -5,6 +5,9 @@ namespace daily.application.Services
 {
     public class DailyServices : IDailyServices
     {
+
+        private string _pathBase = @"c:\temp\";
+        private string _fileNameDatePattern = "yyyyMMdd";
         public DailyTask Get()
         {
 
@@ -15,25 +18,36 @@ namespace daily.application.Services
 
         public IList<DailyTask> GetWeek()
         {
-            DailyTask today = Get(DateTime.Now);
-            DailyTask yesterday = Get(DateTime.Now.AddDays(-1));
-            DailyTask theDayBeforeYesterday = Get(DateTime.Now.AddDays(-2));
-
+            int maxIterations = 10;
+            int totalDays = 5;
             IList<DailyTask> dailyTasks = new List<DailyTask>();
-            dailyTasks.Add(today);
-            dailyTasks.Add(yesterday);
-            dailyTasks.Add(theDayBeforeYesterday);
 
+            for (int i = 0; i < 10 && dailyTasks.Count < 5; i++)
+            {
+                DailyTask currentTask = Get(DateTime.Now.AddDays(-1 * i));
+                if (currentTask != null)
+                    dailyTasks.Add(currentTask);
+            }
 
             return dailyTasks;
         }
         public DailyTask Get(DateTime date)
         {
+            string filePathaName = $"{_pathBase}{date.ToString(_fileNameDatePattern)}.json";
+            DailyTask mainTask;
+            if (!File.Exists(filePathaName) && $"{date.Year}-{date.Month}-{date.Day}" == $"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}")
+            {
+                mainTask = new DailyTask() { Title = date.ToString(_fileNameDatePattern), Description = date.ToString(_fileNameDatePattern) };
+                Save(mainTask);
 
-
-            string jsonString = File.ReadAllText(@"c:\temp\test.json");
-            DailyTask mainTask = JsonSerializer.Deserialize<DailyTask>(jsonString);
-            return mainTask;
+            }
+            if (File.Exists(filePathaName))
+            {
+                string jsonString = File.ReadAllText(filePathaName);
+                mainTask = JsonSerializer.Deserialize<DailyTask>(jsonString);
+                return mainTask;
+            }
+            return null;
             /*DailyTask dailyTask = new DailyTask(date.ToString("dd/MM/yyyy"), date.ToString("dd/MM/yyyy"));
 
             DailyTask userTEC_00001 = new DailyTask("TEC_00001", $"TEC_00001 task description {date.ToString("dd/MM/yyyy")}");
@@ -73,8 +87,9 @@ namespace daily.application.Services
 
         public void Save(DailyTask mainTask)
         {
+            string filePathaName = $"{_pathBase}{mainTask.Date.ToString(_fileNameDatePattern)}.json";
             string jsonString = JsonSerializer.Serialize(mainTask);
-            File.WriteAllText(@"c:\temp\test.json", jsonString);
+            File.WriteAllText(filePathaName, jsonString);
         }
     }
 }
