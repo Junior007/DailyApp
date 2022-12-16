@@ -119,7 +119,6 @@ namespace daily.UI.ViewsModel
 
         private void deleteTaskAction(object obj)
         {
-            
             Guid id = (Guid)obj ;
             DeleteTaskEvent?.Invoke(this, id);
         }
@@ -129,7 +128,7 @@ namespace daily.UI.ViewsModel
             AddTask();
         }
 
-        protected void showAddTaskModal(object obj)
+        /*protected void showAddTaskModal(object obj)
         {
             Window window = new Window
             {
@@ -138,7 +137,7 @@ namespace daily.UI.ViewsModel
             };
 
             window.ShowDialog();
-        }
+        }*/
 
         protected void startStopAction(object obj)
         {
@@ -151,7 +150,7 @@ namespace daily.UI.ViewsModel
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
             base.OnLoaded(sender, e);
-            RefreshSubtaskViews(sender as FrameworkElement);
+            RefreshSubtasksViews();
         }
 
         protected void SetDailyTask(DailyTask value)
@@ -168,13 +167,13 @@ namespace daily.UI.ViewsModel
         {
             DailyTask subTask = new DailyTask();
             DailyTask.AddTask(subTask);
-            RefreshSubtaskViews(this.OwnerView as FrameworkElement);
+            RefreshSubtasksViews();
         }
 
         protected void DeleteSubTask(Guid id)
         {
             DailyTask.DeleteTask(id);
-            RefreshSubtaskViews(this.OwnerView);
+            RefreshSubtasksViews();
         }
 
         protected void OnChangeTaskState(object sender, Object e)
@@ -182,7 +181,7 @@ namespace daily.UI.ViewsModel
             IsRunning = _dailyTask.IsRunning;
         }
 
-        protected abstract void RefreshSubtaskViews(FrameworkElement? frameworkElement);
+        protected abstract void RefreshSubtasksViews();
 
         protected void setTimming()
         {//TODO -  pensar en timmer único en la vista principal

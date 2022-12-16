@@ -15,13 +15,13 @@ namespace daily.UI.ViewsModel
 
         }
 
-        protected override void RefreshSubtaskViews(FrameworkElement? frameworkElement)
+        protected override void RefreshSubtasksViews()
         {
+            stackPanelContainer = this.OwnerView?.FindName(Container) as StackPanel;
+            stackPanelContainer?.Children.Clear();
+
             if (SubTasks?.Count > 0)
             {
-                FrameworkElement thisView = frameworkElement as FrameworkElement;
-                stackPanelContainer = thisView?.FindName(Container) as StackPanel;
-                stackPanelContainer.Children.Clear();
 
                 foreach (var task in SubTasks)
                 {
