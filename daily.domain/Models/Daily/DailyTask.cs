@@ -1,4 +1,7 @@
-﻿namespace daily.domain.Models.Daily
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace daily.domain.Models.Daily
 {
     public class DailyTask
     {
@@ -10,7 +13,9 @@
 
         public string Title { get; set; }
         public string Description { get; set; }
+        [JsonInclude]
         public List<Interval> Intervals { get; private set; }
+        [JsonInclude]
         public List<DailyTask> SubTasks { get; private set; }
         public bool IsRunning => HasIntervals && Intervals.Any(i => i.IsOpen);
         public bool HasIntervals => Intervals.Count > 0;

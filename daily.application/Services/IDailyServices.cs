@@ -7,5 +7,6 @@ namespace daily.application.Services
         public DailyTask Get();
         public DailyTask Get(DateTime date);
         IList<DailyTask> GetWeek();
+        void Save(DailyTask dailyTask);
     }
 }

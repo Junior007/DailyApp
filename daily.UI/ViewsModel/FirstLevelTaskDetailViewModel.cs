@@ -1,17 +1,26 @@
 ﻿using daily.application.Services;
+using daily.UI.Commands;
 using daily.UI.Views.Controls;
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace daily.UI.ViewsModel
 {
     internal class FirstLevelTaskDetailViewModel : AbstractDailyTaskDetailViewModel
     {
 
-
+        public ICommand OnButtonClickSave => onButtonClickSave;
+        private ICommand onButtonClickSave;
         public FirstLevelTaskDetailViewModel(IDailyServices dailyService) : base(dailyService)
         {
+            onButtonClickSave = new RelayCommand(saveAction, value => true);
+        }
 
+        private void saveAction(object obj)
+        {
+            _dailyService.Save(DailyTask);
         }
 
         protected override void RefreshSubtasksViews()

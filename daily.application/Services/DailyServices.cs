@@ -1,4 +1,5 @@
 ﻿using daily.domain.Models.Daily;
+using System.Text.Json;
 
 namespace daily.application.Services
 {
@@ -28,7 +29,12 @@ namespace daily.application.Services
         }
         public DailyTask Get(DateTime date)
         {
-            DailyTask dailyTask = new DailyTask(date.ToString("dd/MM/yyyy"), date.ToString("dd/MM/yyyy"));
+
+
+            string jsonString = File.ReadAllText(@"c:\temp\test.json");
+            DailyTask mainTask = JsonSerializer.Deserialize<DailyTask>(jsonString);
+            return mainTask;
+            /*DailyTask dailyTask = new DailyTask(date.ToString("dd/MM/yyyy"), date.ToString("dd/MM/yyyy"));
 
             DailyTask userTEC_00001 = new DailyTask("TEC_00001", $"TEC_00001 task description {date.ToString("dd/MM/yyyy")}");
             DailyTask userTEC_00001_sub1 = new DailyTask("TEC_00001 1", $"Pruebas TEC_00001 {date.ToString("dd/MM/yyyy")}");
@@ -62,7 +68,13 @@ namespace daily.application.Services
 
 
             return dailyTask;
+            */
         }
 
+        public void Save(DailyTask mainTask)
+        {
+            string jsonString = JsonSerializer.Serialize(mainTask);
+            File.WriteAllText(@"c:\temp\test.json", jsonString);
+        }
     }
 }

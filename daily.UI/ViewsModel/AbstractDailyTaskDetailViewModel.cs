@@ -65,7 +65,7 @@ namespace daily.UI.ViewsModel
 
         public DailyTask DailyTask
         {
-            private get => _dailyTask;
+            protected get => _dailyTask;
             set
             {
                 SetDailyTask(value);
