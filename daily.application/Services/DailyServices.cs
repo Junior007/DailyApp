@@ -45,6 +45,7 @@ namespace daily.application.Services
             {
                 string jsonString = File.ReadAllText(filePathaName);
                 mainTask = JsonSerializer.Deserialize<DailyTask>(jsonString);
+                mainTask.RefreshEventHandlers();
                 return mainTask;
             }
             return null;
