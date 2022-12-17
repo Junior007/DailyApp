@@ -55,13 +55,10 @@ namespace daily.UI.ViewsModel
 
         private ICommand onSelectionChanged;
 
-        protected Timer _autoSaveTimmer = new Timer(5000);
 
         private void changeDateTasksAction(object obj)
         {
             SaveAction();
-            _autoSaveTimmer.Elapsed += (sender, e) => SaveAction();
-            _autoSaveTimmer.Start();
 
             TabItem tab = (TabItem)navBar.SelectedItem;
             string lookfor = (string)tab.Header;
