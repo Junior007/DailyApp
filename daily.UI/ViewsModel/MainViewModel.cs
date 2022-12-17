@@ -4,6 +4,8 @@ using daily.UI.Commands;
 using daily.UI.Views.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Timers;
 using System.Windows;
@@ -15,6 +17,7 @@ namespace daily.UI.ViewsModel
     internal class MainViewModel : AbstractViewModel
     {
 
+        private string _dateTimeFormat = "dd-MM-yyyy";
         public ICommand OnSelectionChanged => onSelectionChanged;
 
         public double ContainerWidth
@@ -34,9 +37,10 @@ namespace daily.UI.ViewsModel
             onSelectionChanged = new RelayCommand(changeDateTasksAction, value => true);
 
             onResizeCompleted.Enabled = true;
-            onResizeCompleted.Elapsed += new ElapsedEventHandler(setSize);
+            onResizeCompleted.Elapsed += new ElapsedEventHandler(SetSize);
         }
 
+        DailyTask _selectedMainTask;
 
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
@@ -51,23 +55,35 @@ namespace daily.UI.ViewsModel
 
         private ICommand onSelectionChanged;
 
+
         private void changeDateTasksAction(object obj)
         {
+            SaveAction();
+
             TabItem tab = (TabItem)navBar.SelectedItem;
             string lookfor = (string)tab.Header;
 
-            AddSubtasks(OwnerView as FrameworkElement, lookfor);
+            AddSubtasks(lookfor);
         }
 
+        private void SaveAction()
+        {
+            _dailyService.Save(_selectedMainTask);
+        }
+        protected override void OnClose(object? sender, CancelEventArgs e)
+        {
+            base.OnClose(sender, e);
+            _dailyService.Save(_selectedMainTask);
+        }
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
             base.OnLoaded(sender, e);
-            AddTabs(sender as FrameworkElement);
+            AddTabs();
 
-            TabItem tab = (TabItem)navBar.SelectedItem;
-            string lookfor = (string)tab.Header;
-
-            AddSubtasks(sender as FrameworkElement, lookfor);
+            TabItem tab = (TabItem)navBar?.SelectedItem;
+            string lookfor = (string)tab?.Header;
+            if (lookfor != null)
+                AddSubtasks(lookfor);
         }
 
         protected override void OnResize(object sender, SizeChangedEventArgs e)
@@ -77,16 +93,15 @@ namespace daily.UI.ViewsModel
             onResizeCompleted.Start();
         }
 
-        private void setSize(object? sender, ElapsedEventArgs e)
+        private void SetSize(object? sender, ElapsedEventArgs e)
         {
             onResizeCompleted.Stop();
             ContainerWidth = ParentWidth - 40;
         }
 
-        private void AddTabs(FrameworkElement? frameworkElement)
+        private void AddTabs()
         {
-            FrameworkElement thisView = frameworkElement as FrameworkElement;
-            navBar = thisView?.FindName(NavBar) as TabControl;
+            navBar = this.OwnerView?.FindName(NavBar) as TabControl;
 
             IList<DailyTask> week = _dailyService.GetWeek();
             navBar.Items.Clear();
@@ -95,26 +110,30 @@ namespace daily.UI.ViewsModel
             {
                 TabItem item = new TabItem
                 {
-                    Header = daily.Title
+                    Header = daily.Date.ToString(_dateTimeFormat)
                 };
                 navBar.Items.Add(item);
             }
         }
 
-        private void AddSubtasks(FrameworkElement frameworkElement, string lookfor)
+        private void AddSubtasks(string lookfor)
         {
-            FrameworkElement thisView = frameworkElement as FrameworkElement;
-            stackPanelContainer = thisView?.FindName(Container) as StackPanel;
+            stackPanelContainer = this.OwnerView?.FindName(Container) as StackPanel;
 
             DateTime dateTime;
-            DateTime.TryParse(lookfor, out dateTime);
-            DailyTask mainTask = _dailyService.Get(dateTime);
+            DateTime.TryParseExact(lookfor,
+                       _dateTimeFormat,
+                       CultureInfo.InvariantCulture,
+                       DateTimeStyles.None,
+                       out dateTime);
+
+            _selectedMainTask = _dailyService.Get(dateTime);
 
             stackPanelContainer.Children.Clear();
 
             FirstLevelTaskDetailView userControlDailyTaskDetail = new FirstLevelTaskDetailView();
             FirstLevelTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as FirstLevelTaskDetailViewModel;
-            dailyTaskDetailModel.DailyTask = mainTask;
+            dailyTaskDetailModel.DailyTask = _selectedMainTask;
             stackPanelContainer.Children.Add(userControlDailyTaskDetail);
 
         }

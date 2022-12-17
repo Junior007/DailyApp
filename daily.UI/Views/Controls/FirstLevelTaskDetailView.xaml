@@ -65,6 +65,17 @@
                 </i:Interaction.Triggers>
             </Button>
 
+            <Button 
+                FontFamily="Segoe MDL2 Assets" Content="&#xE74E;" 
+                Padding="10,0,10,0"
+                Height="20"
+                VerticalAlignment="Top">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseUp" >
+                        <i:InvokeCommandAction Command="{Binding OnButtonClickSave}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
         </StackPanel>
 
         <TextBlock  Grid.Row="0" 

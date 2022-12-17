@@ -1,8 +1,12 @@
-﻿namespace daily.domain.Models.Daily
+﻿using System.Text.Json.Serialization;
+
+namespace daily.domain.Models.Daily
 {
     public class Interval
     {
+        [JsonInclude]
         public DateTime Init { get; private set; }
+        [JsonInclude]
         public DateTime? End { get; private set; }
         public bool IsOpen => End == null;
         public bool IsClose => !IsOpen;

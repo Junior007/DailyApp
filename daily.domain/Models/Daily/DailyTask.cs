@@ -1,4 +1,8 @@
-﻿namespace daily.domain.Models.Daily
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+
+namespace daily.domain.Models.Daily
 {
     public class DailyTask
     {
@@ -7,10 +11,13 @@
 
         public delegate void TaskStopEventHandler(object sender, DailyTaskStopEventArgs e);
         public event TaskStopEventHandler TaskStopEvent;
-
         public string Title { get; set; }
         public string Description { get; set; }
+        [JsonInclude]
+        public DateTime Date { get; private set; }
+        [JsonInclude]
         public List<Interval> Intervals { get; private set; }
+        [JsonInclude]
         public List<DailyTask> SubTasks { get; private set; }
         public bool IsRunning => HasIntervals && Intervals.Any(i => i.IsOpen);
         public bool HasIntervals => Intervals.Count > 0;
@@ -24,22 +31,31 @@
         public DailyTask()
         {
             Id = Guid.NewGuid();
+            Date = DateTime.Now;
             Intervals = new List<Interval>();
             SubTasks = new List<DailyTask>();
         }
 
-
-        public void DeleteTask(Guid id)
+        public void RefreshEventHandlers()
         {
-            var dailyTask = SubTasks.Find(i => i.Id == id);
-            if (dailyTask != null)
-                SubTasks.Remove(dailyTask);
+            foreach (var task in SubTasks)
+            {
+                task.TaskStartEvent += (sender, e) => StartUp(sender as DailyTask);
+                task.RefreshEventHandlers();
+            }
         }
         public void AddTask(DailyTask task)
         {
             //TODO : en la creación también se ha de atachar todos los eventos
             task.TaskStartEvent += (sender, e) => StartUp(sender as DailyTask);
             SubTasks.Add(task);
+        }
+
+        public void DeleteTask(Guid id)
+        {
+            var dailyTask = SubTasks.Find(i => i.Id == id);
+            if (dailyTask != null)
+                SubTasks.Remove(dailyTask);
         }
 
         public void AddTask(string title, string description)
