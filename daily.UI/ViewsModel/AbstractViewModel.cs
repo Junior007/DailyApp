@@ -17,18 +17,45 @@ namespace daily.UI.ViewsModel
                 OnPropertyChanged();
             }
         }
-        private double _width;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         protected FrameworkElement _ownerView { get; set; }
+        private double _width;
+
         internal FrameworkElement OwnerView
         {
             get => _ownerView;
             set
             {
+
                 _ownerView = value;
                 _ownerView.Loaded+=OnLoaded;
+                _ownerView.Loaded += (sender, cancelArg) =>
+                {
+
+                    Window window = Window.GetWindow(_ownerView);
+                    window.Closing += OnClose;
+
+                };
                 _ownerView.SizeChanged += OnResize;
+                _ownerView.LostFocus += OnLostFocus;
+
             }
+        }
+
+        protected virtual void OnClose(object? sender, CancelEventArgs e)
+        {
+            
+        }
+
+        protected virtual void OnLostFocus(object sender, RoutedEventArgs e)
+        {
         }
 
         protected virtual void OnResize(object sender, SizeChangedEventArgs e)
@@ -46,13 +73,6 @@ namespace daily.UI.ViewsModel
         protected virtual void OnLoaded(object sender, RoutedEventArgs e)
         {
             
-        }
-
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

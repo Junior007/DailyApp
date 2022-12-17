@@ -4,6 +4,7 @@ using daily.UI.Commands;
 using daily.UI.Views.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Timers;
@@ -36,9 +37,10 @@ namespace daily.UI.ViewsModel
             onSelectionChanged = new RelayCommand(changeDateTasksAction, value => true);
 
             onResizeCompleted.Enabled = true;
-            onResizeCompleted.Elapsed += new ElapsedEventHandler(setSize);
+            onResizeCompleted.Elapsed += new ElapsedEventHandler(SetSize);
         }
 
+        DailyTask _selectedMainTask;
 
         private IDailyServices _dailyService;
         private StackPanel stackPanelContainer;
@@ -55,12 +57,22 @@ namespace daily.UI.ViewsModel
 
         private void changeDateTasksAction(object obj)
         {
+            SaveAction();
+
             TabItem tab = (TabItem)navBar.SelectedItem;
             string lookfor = (string)tab.Header;
 
             AddSubtasks(lookfor);
         }
 
+        private void SaveAction()
+        {
+            _dailyService.Save(_selectedMainTask);
+        }
+        protected override void OnClose(object? sender, CancelEventArgs e)
+        {
+            _dailyService.Save(_selectedMainTask);
+        }
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
             base.OnLoaded(sender, e);
@@ -79,7 +91,7 @@ namespace daily.UI.ViewsModel
             onResizeCompleted.Start();
         }
 
-        private void setSize(object? sender, ElapsedEventArgs e)
+        private void SetSize(object? sender, ElapsedEventArgs e)
         {
             onResizeCompleted.Stop();
             ContainerWidth = ParentWidth - 40;
@@ -114,13 +126,13 @@ namespace daily.UI.ViewsModel
                        DateTimeStyles.None,
                        out dateTime);
 
-            DailyTask mainTask = _dailyService.Get(dateTime);
+            _selectedMainTask = _dailyService.Get(dateTime);
 
             stackPanelContainer.Children.Clear();
 
             FirstLevelTaskDetailView userControlDailyTaskDetail = new FirstLevelTaskDetailView();
             FirstLevelTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as FirstLevelTaskDetailViewModel;
-            dailyTaskDetailModel.DailyTask = mainTask;
+            dailyTaskDetailModel.DailyTask = _selectedMainTask;
             stackPanelContainer.Children.Add(userControlDailyTaskDetail);
 
         }

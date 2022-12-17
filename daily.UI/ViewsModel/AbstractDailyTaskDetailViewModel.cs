@@ -102,7 +102,7 @@ namespace daily.UI.ViewsModel
         protected ICommand onButtonClickAddTask;
         protected ICommand onButtonClickDeleteTask;
 
-        protected Timer refreshTimming = new Timer(30000);
+        protected Timer _refreshTimming = new Timer(30000);
 
         public AbstractDailyTaskDetailViewModel(IDailyServices dailyService)
         {
@@ -111,10 +111,6 @@ namespace daily.UI.ViewsModel
             //onButtonClickAddTask = new RelayCommand(showAddTaskModal, value => true);
             onButtonClickAddTask = new RelayCommand(addTaskAction, value => true);
             onButtonClickDeleteTask = new RelayCommand(deleteTaskAction, value => true);
-
-            refreshTimming.Enabled = true;
-            refreshTimming.Elapsed += new ElapsedEventHandler((object? sender, ElapsedEventArgs e) => setTimming());
-
         }
 
         private void deleteTaskAction(object obj)
@@ -159,9 +155,16 @@ namespace daily.UI.ViewsModel
             Title = _dailyTask.Title;
             Description = _dailyTask.Description;
             Id = _dailyTask.Id;
+            IsRunning = _dailyTask.IsRunning;
+            setTimming();
+
+            _refreshTimming.Enabled = true;
+            _refreshTimming.Elapsed += new ElapsedEventHandler((object? sender, ElapsedEventArgs e) => setTimming());
 
             _dailyTask.TaskStartEvent += OnChangeTaskState;
             _dailyTask.TaskStopEvent += OnChangeTaskState;
+
+
         }
         protected void AddTask()
         {
@@ -185,6 +188,7 @@ namespace daily.UI.ViewsModel
 
         protected void setTimming()
         {//TODO -  pensar en timmer único en la vista principal
+            _refreshTimming.Enabled = false;
 
             lock (_dailyTask.Intervals)
             {
@@ -196,6 +200,9 @@ namespace daily.UI.ViewsModel
                 }
                 Timming = new TimeSpan(ticks);
             }
+
+            _refreshTimming.Enabled = true;
+
         }
     }
 }

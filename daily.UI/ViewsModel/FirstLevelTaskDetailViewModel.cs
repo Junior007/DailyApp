@@ -15,10 +15,16 @@ namespace daily.UI.ViewsModel
         private ICommand onButtonClickSave;
         public FirstLevelTaskDetailViewModel(IDailyServices dailyService) : base(dailyService)
         {
-            onButtonClickSave = new RelayCommand(saveAction, value => true);
+            onButtonClickSave = new RelayCommand(SaveAction, value => true);
         }
 
-        private void saveAction(object obj)
+        protected void OnChangeTaskState(object sender, Object e)
+        {
+            base.OnChangeTaskState(sender, e);
+            _dailyService.Save(DailyTask);
+        }
+
+        private void SaveAction(object obj)
         {
             _dailyService.Save(DailyTask);
         }
