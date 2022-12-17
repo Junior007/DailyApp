@@ -81,7 +81,9 @@
         <TextBox  Grid.Row="0" 
                   Grid.Column="1"
                   Text="{Binding Description, Mode=TwoWay}" 
+                  Padding="5,5,5,5"
                   Height="Auto" 
+                  BorderBrush="Gainsboro"
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 
                   Margin="20,2,0,0"></TextBox>

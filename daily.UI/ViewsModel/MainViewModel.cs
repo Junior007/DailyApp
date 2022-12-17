@@ -55,9 +55,13 @@ namespace daily.UI.ViewsModel
 
         private ICommand onSelectionChanged;
 
+        protected Timer _autoSaveTimmer = new Timer(5000);
+
         private void changeDateTasksAction(object obj)
         {
             SaveAction();
+            _autoSaveTimmer.Elapsed += (sender, e) => SaveAction();
+            _autoSaveTimmer.Start();
 
             TabItem tab = (TabItem)navBar.SelectedItem;
             string lookfor = (string)tab.Header;
@@ -71,12 +75,13 @@ namespace daily.UI.ViewsModel
         }
         protected override void OnClose(object? sender, CancelEventArgs e)
         {
+            base.OnClose(sender, e);
             _dailyService.Save(_selectedMainTask);
         }
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
             base.OnLoaded(sender, e);
-            AddTabs(sender as FrameworkElement);
+            AddTabs();
 
             TabItem tab = (TabItem)navBar?.SelectedItem;
             string lookfor = (string)tab?.Header;
@@ -97,10 +102,9 @@ namespace daily.UI.ViewsModel
             ContainerWidth = ParentWidth - 40;
         }
 
-        private void AddTabs(FrameworkElement? frameworkElement)
+        private void AddTabs()
         {
-            FrameworkElement thisView = frameworkElement as FrameworkElement;
-            navBar = thisView?.FindName(NavBar) as TabControl;
+            navBar = this.OwnerView?.FindName(NavBar) as TabControl;
 
             IList<DailyTask> week = _dailyService.GetWeek();
             navBar.Items.Clear();
