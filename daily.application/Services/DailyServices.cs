@@ -1,4 +1,6 @@
 ﻿using daily.domain.Models.Daily;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace daily.application.Services
@@ -6,8 +8,20 @@ namespace daily.application.Services
     public class DailyServices : IDailyServices
     {
 
-        private string _pathBase = @"c:\temp\";
-        private string _fileNameDatePattern = "yyyyMMdd";
+        private readonly string _pathBase = @"c:\temp\";
+        private readonly string _fileNameDatePattern = "yyyyMMdd";
+        private readonly string _taskDescriptionDatePattern = @"dddd - dd/MM/yyyy";
+
+
+        public DailyServices()
+        {
+            string _pathAssembly = Assembly.GetAssembly(this.GetType()).Location.Replace(Assembly.GetAssembly(this.GetType()).ManifestModule.Name,"");
+            _pathBase = $"{_pathAssembly}\\files\\";
+            if (!Directory.Exists(_pathBase))
+            {
+                Directory.CreateDirectory(_pathBase);
+            }
+        }
         public DailyTask Get()
         {
 
@@ -37,9 +51,10 @@ namespace daily.application.Services
             DailyTask mainTask;
             if (!File.Exists(filePathaName) && $"{date.Year}-{date.Month}-{date.Day}" == $"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}")
             {
-                mainTask = new DailyTask() { Title = date.ToString(_fileNameDatePattern), Description = date.ToString(_fileNameDatePattern) };
+                mainTask = new DailyTask() {  Description = date.ToString(_taskDescriptionDatePattern).ToUpper() };
+                mainTask.AddTask(new DailyTask() { Description = "COMIDA" });
+                mainTask.AddTask(new DailyTask() { Description = "DESCANSO" });
                 Save(mainTask);
-
             }
             if (File.Exists(filePathaName))
             {

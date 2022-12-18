@@ -36,8 +36,8 @@ namespace daily.UI.ViewsModel
 
             onSelectionChanged = new RelayCommand(changeDateTasksAction, value => true);
 
-            onResizeCompleted.Enabled = true;
-            onResizeCompleted.Elapsed += new ElapsedEventHandler(SetSize);
+            onResizeCompletedLapTimmer.Enabled = true;
+            onResizeCompletedLapTimmer.Elapsed += new ElapsedEventHandler(SetSize);
         }
 
         DailyTask _selectedMainTask;
@@ -50,7 +50,7 @@ namespace daily.UI.ViewsModel
         private string NavBar = nameof(NavBar);
 
         private double _containerWidth;
-        private Timer onResizeCompleted = new Timer(250);
+        private Timer onResizeCompletedLapTimmer = new Timer(250);
 
 
         private ICommand onSelectionChanged;
@@ -80,22 +80,27 @@ namespace daily.UI.ViewsModel
             base.OnLoaded(sender, e);
             AddTabs();
 
-            TabItem tab = (TabItem)navBar?.SelectedItem;
-            string lookfor = (string)tab?.Header;
+            TabItem tab = null;
+            if (navBar.SelectedItem == null)
+            {
+                navBar.SelectedItem = navBar.Items[0];
+            }
+            tab = (TabItem)navBar.SelectedItem;
+            string lookfor = (string)tab.Header;
             if (lookfor != null)
                 AddSubtasks(lookfor);
         }
 
         protected override void OnResize(object sender, SizeChangedEventArgs e)
         {
-            onResizeCompleted.Stop();
             base.OnResize(sender, e);
-            onResizeCompleted.Start();
+            onResizeCompletedLapTimmer.Stop();
+            onResizeCompletedLapTimmer.Start();
         }
 
         private void SetSize(object? sender, ElapsedEventArgs e)
         {
-            onResizeCompleted.Stop();
+            onResizeCompletedLapTimmer.Stop();
             ContainerWidth = ParentWidth - 40;
         }
 
