@@ -18,11 +18,12 @@
     </UserControl.Resources>
 
     <Grid  Width="Auto"                 
-           HorizontalAlignment="Stretch">
+           HorizontalAlignment="Stretch"
+           >
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="180"></ColumnDefinition>
-            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -33,7 +34,8 @@
         <StackPanel Orientation="Horizontal" 
                     Grid.Row="0" 
                     Grid.Column="0"
-                    Margin="0,2,0,0">
+                    Margin="0,2,0,0"
+                    Width="Auto">
 
             <TextBlock 
                 Text="{Binding Timming , Converter={StaticResource TimeSpanConverter}}" 
@@ -83,8 +85,7 @@
                   Text="{Binding Description, Mode=TwoWay}" 
                   Height="Auto" 
                   TextWrapping="Wrap" 
-                  Margin="0,2,0,0"
-                   Background="Azure"></TextBlock>
+                  Margin="0,2,0,0"></TextBlock>
 
         <StackPanel Name="Container"
                     Orientation="Vertical" 

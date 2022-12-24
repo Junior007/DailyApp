@@ -79,7 +79,7 @@
                   Text="{Binding Description, Mode=TwoWay}"
                   Padding="5,5,5,5"
                   Height="Auto" 
-                  Background="#f0f0f0"
+                  Background="Transparent"
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 
                   Margin="40,2,0,0"

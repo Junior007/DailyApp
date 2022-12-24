@@ -83,11 +83,11 @@
                   Text="{Binding Description, Mode=TwoWay}" 
                   Padding="5,5,5,5"
                   Height="Auto" 
-                  Background="#f0f0f0"
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 
                   Margin="20,2,0,0"
-                  BorderThickness="0" ></TextBox>
+                  BorderThickness="0" 
+                  Background="Transparent"></TextBox>
 
         <StackPanel Name="Container"
                     Orientation="Vertical" 

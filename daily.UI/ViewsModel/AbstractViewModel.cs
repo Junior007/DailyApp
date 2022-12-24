@@ -36,13 +36,13 @@ namespace daily.UI.ViewsModel
 
                 _ownerView = value;
                 _ownerView.Loaded+=OnLoaded;
-                _ownerView.Loaded += (sender, cancelArg) =>
+                /*_ownerView.Loaded += (sender, cancelArg) =>
                 {
 
                     Window window = Window.GetWindow(_ownerView);
                     window.Closing += OnClose;
 
-                };
+                };*/
                 _ownerView.SizeChanged += OnResize;
                 _ownerView.LostFocus += OnLostFocus;
 

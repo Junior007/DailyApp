@@ -30,20 +30,7 @@ namespace daily.UI.ViewsModel
             }
         }
 
-        public MainViewModel(IDailyServices dailyService)
-        {
-            _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
-
-            onSelectionChanged = new RelayCommand(changeDateTasksAction, value => true);
-
-            onResizeCompletedLapTimmer.Enabled = true;
-            onResizeCompletedLapTimmer.Elapsed += new ElapsedEventHandler(SetSize);
-        }
-
-        DailyTask _selectedMainTask;
-
         private IDailyServices _dailyService;
-        private StackPanel stackPanelContainer;
         private TabControl navBar;
 
         private string Container = nameof(Container);
@@ -52,43 +39,39 @@ namespace daily.UI.ViewsModel
         private double _containerWidth;
         private Timer onResizeCompletedLapTimmer = new Timer(250);
 
-
         private ICommand onSelectionChanged;
 
-
-        private void changeDateTasksAction(object obj)
+        public MainViewModel(IDailyServices dailyService)
         {
-            SaveAction();
+            _dailyService = dailyService ?? throw new ArgumentNullException(nameof(dailyService));
+
+            onSelectionChanged = new RelayCommand(changeTabAction, value => true);
+
+            onResizeCompletedLapTimmer.Enabled = true;
+            onResizeCompletedLapTimmer.Elapsed += new ElapsedEventHandler(SetSize);
+        }
+
+        private void changeTabAction(object obj)
+        {
 
             TabItem tab = (TabItem)navBar.SelectedItem;
-            string lookfor = (string)tab.Header;
 
-            AddSubtasks(lookfor);
+            SetSelectedTask(tab);
         }
 
-        private void SaveAction()
-        {
-            _dailyService.Save(_selectedMainTask);
-        }
         protected override void OnClose(object? sender, CancelEventArgs e)
         {
             base.OnClose(sender, e);
-            _dailyService.Save(_selectedMainTask);
         }
         protected override void OnLoaded(object sender, RoutedEventArgs e)
         {
             base.OnLoaded(sender, e);
             AddTabs();
 
-            TabItem tab = null;
-            if (navBar.SelectedItem == null)
+            if (navBar?.Items[0] != null)
             {
-                navBar.SelectedItem = navBar.Items[0];
+                SetSelectedTask(navBar.Items[0] as TabItem);
             }
-            tab = (TabItem)navBar.SelectedItem;
-            string lookfor = (string)tab.Header;
-            if (lookfor != null)
-                AddSubtasks(lookfor);
         }
 
         protected override void OnResize(object sender, SizeChangedEventArgs e)
@@ -104,6 +87,11 @@ namespace daily.UI.ViewsModel
             ContainerWidth = ParentWidth - 40;
         }
 
+        private void SetSelectedTask(TabItem selectedTab)
+        {
+            navBar.SelectedItem = selectedTab;
+            string lookfor = (string)selectedTab.Header;
+        }
         private void AddTabs()
         {
             navBar = this.OwnerView?.FindName(NavBar) as TabControl;
@@ -115,15 +103,25 @@ namespace daily.UI.ViewsModel
             {
                 TabItem item = new TabItem
                 {
-                    Header = daily.Date.ToString(_dateTimeFormat)
+                    Header = daily.Date.ToString(_dateTimeFormat),
+                    Content = GetSubtaskTemplate(daily.Date)
+
                 };
                 navBar.Items.Add(item);
             }
         }
 
-        private void AddSubtasks(string lookfor)
+        private FirstLevelTaskDetailView GetSubtaskTemplate(DateTime dateTime)
         {
-            stackPanelContainer = this.OwnerView?.FindName(Container) as StackPanel;
+            FirstLevelTaskDetailView userControlDailyTaskDetail = new FirstLevelTaskDetailView();
+            FirstLevelTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as FirstLevelTaskDetailViewModel;
+            dailyTaskDetailModel.DailyTask = _dailyService.Get(dateTime);
+            return userControlDailyTaskDetail;
+
+        }
+
+        private DailyTask LookFor(string lookfor)
+        {
 
             DateTime dateTime;
             DateTime.TryParseExact(lookfor,
@@ -132,15 +130,7 @@ namespace daily.UI.ViewsModel
                        DateTimeStyles.None,
                        out dateTime);
 
-            _selectedMainTask = _dailyService.Get(dateTime);
-
-            stackPanelContainer.Children.Clear();
-
-            FirstLevelTaskDetailView userControlDailyTaskDetail = new FirstLevelTaskDetailView();
-            FirstLevelTaskDetailViewModel dailyTaskDetailModel = userControlDailyTaskDetail.DataContext as FirstLevelTaskDetailViewModel;
-            dailyTaskDetailModel.DailyTask = _selectedMainTask;
-            stackPanelContainer.Children.Add(userControlDailyTaskDetail);
-
+            return _dailyService.Get(dateTime);
         }
     }
 }
