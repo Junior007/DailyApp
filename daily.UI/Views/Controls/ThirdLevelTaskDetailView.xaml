@@ -79,11 +79,11 @@
                   Text="{Binding Description, Mode=TwoWay}"
                   Padding="5,5,5,5"
                   Height="Auto" 
-
-                  BorderBrush="Gainsboro"
+                  Background="Transparent"
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 
-                  Margin="40,2,0,0"></TextBox>
+                  Margin="40,2,0,0"
+                  BorderThickness="0"></TextBox>
 
         <StackPanel Name="Container"
                     Orientation="Vertical" 

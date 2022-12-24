@@ -2,6 +2,7 @@
 using daily.UI.Commands;
 using daily.UI.Views.Controls;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,16 +19,16 @@ namespace daily.UI.ViewsModel
             onButtonClickSave = new RelayCommand(SaveAction, value => true);
         }
 
-        protected void OnChangeTaskState(object sender, Object e)
-        {
-            base.OnChangeTaskState(sender, e);
-            _dailyService.Save(DailyTask);
-        }
-
         private void SaveAction(object obj)
         {
             _dailyService.Save(DailyTask);
         }
+        protected override void OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            base.OnLostFocus(sender, e);
+            SaveAction(sender);
+        }
+
 
         protected override void RefreshSubtasksViews()
         {
