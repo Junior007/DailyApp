@@ -10,7 +10,7 @@
              xmlns:converters="clr-namespace:daily.UI.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100">
-   
+
     <UserControl.Resources>
         <converters:IsRunningToIconConverter x:Key="IsRunningToIconConverter" />
         <converters:IsRunningToBackgroundConverter x:Key="IsRunningToBackgroundConverter" />
@@ -19,55 +19,51 @@
 
     <DockPanel>
 
+        <Button DockPanel.Dock="Left"
+                FontFamily="Segoe MDL2 Assets" Content="&#xE710;" 
+                Padding="10,0,10,0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseUp" >
+                    <i:InvokeCommandAction Command="{Binding OnButtonClickAddTask}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
         <DockPanel DockPanel.Dock="Top">
 
-            <WrapPanel Orientation="Horizontal" 
-                    DockPanel.Dock="Left"
+            <WrapPanel DockPanel.Dock="Left"
                     Margin="0,2,0,0">
-            
-            <TextBlock 
+
+                <TextBlock 
                 Text="{Binding Timming , Converter={StaticResource TimeSpanConverter}}" 
                 Padding="10,0,10,0"></TextBlock>
 
-            <Button 
+                <Button 
                 FontFamily="Segoe MDL2 Assets" 
                 Content="{Binding IsRunning, Converter={StaticResource IsRunningToIconConverter}}" 
                 Padding="10,0,10,0"
                 Height="20"
                 VerticalAlignment="Top"
                 Background="{Binding IsRunning, Converter={StaticResource IsRunningToBackgroundConverter}}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseUp" >
-                        <i:InvokeCommandAction Command="{Binding StartStop}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-
-            <Button 
-                FontFamily="Segoe MDL2 Assets" Content="&#xE710;" 
-                Padding="10,0,10,0"
-                Height="20"
-                VerticalAlignment="Top">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseUp" >
-                        <i:InvokeCommandAction Command="{Binding OnButtonClickAddTask}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button 
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseUp" >
+                            <i:InvokeCommandAction Command="{Binding StartStop}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button 
                 FontFamily="Segoe MDL2 Assets" Content="&#xE711;" 
                 Padding="10,0,10,0"
                 Height="20"
                 VerticalAlignment="Top">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseUp" >
-                        <i:InvokeCommandAction Command="{Binding OnButtonClickDeleteTask}" CommandParameter="{Binding Id}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-        </WrapPanel>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseUp" >
+                            <i:InvokeCommandAction Command="{Binding OnButtonClickDeleteTask}" CommandParameter="{Binding Id}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </WrapPanel>
 
-        <TextBox  DockPanel.Dock="Left"
+            <TextBox  DockPanel.Dock="Right"
                   Text="{Binding Description, Mode=TwoWay}" 
                   Padding="5,5,5,5"
                   Height="Auto" 

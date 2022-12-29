@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         Title="Daily Tasks" 
         d:DesignHeight="800" d:DesignWidth="800"
-        Background="CadetBlue">
+        Background="#FF5F7BA0">
 
     <Window.Resources>
         <converters:IsRunningToIconConverter x:Key="IsRunningToIconConverter" />

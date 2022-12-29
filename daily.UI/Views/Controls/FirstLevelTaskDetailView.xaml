@@ -17,18 +17,23 @@
         <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
     </UserControl.Resources>
 
-    <ScrollViewer Margin="10,10,10,10">
+    <ScrollViewer Padding="20,20,20,20">
         <DockPanel>
+            <Button DockPanel.Dock="Left"
+                FontFamily="Segoe MDL2 Assets" Content="&#xE710;" 
+                Padding="10,0,10,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseUp" >
+                        <i:InvokeCommandAction Command="{Binding OnButtonClickAddTask}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
             <DockPanel DockPanel.Dock="Top">
-                <WrapPanel Orientation="Horizontal" 
-                    DockPanel.Dock="Left"
-                    Margin="0,2,0,0"
-                    Width="Auto">
-
+                <WrapPanel DockPanel.Dock="Left"
+                    Margin="34,2,0,0">
                     <TextBlock 
                 Text="{Binding Timming , Converter={StaticResource TimeSpanConverter}}" 
                 Padding="10,0,10,0"></TextBlock>
-
                     <Button 
                 FontFamily="Segoe MDL2 Assets" 
                 Content="{Binding IsRunning, Converter={StaticResource IsRunningToIconConverter}}" 
@@ -42,19 +47,6 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
-
-                    <Button 
-                FontFamily="Segoe MDL2 Assets" Content="&#xE710;" 
-                Padding="10,0,10,0"
-                Height="20"
-                VerticalAlignment="Top">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseUp" >
-                                <i:InvokeCommandAction Command="{Binding OnButtonClickAddTask}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-
                     <Button 
                 FontFamily="Segoe MDL2 Assets" Content="&#xE74E;" 
                 Padding="10,0,10,0"
@@ -72,8 +64,9 @@
                   Text="{Binding Description, Mode=TwoWay}" 
                   Height="Auto" 
                   TextWrapping="Wrap" 
-                  Margin="0,2,0,0"></TextBlock>
+                  Margin="10,2,0,0"></TextBlock>
             </DockPanel>
+
             <WrapPanel Name="Container"
                     Orientation="Vertical" 
                     Margin="0,2,0,2"
