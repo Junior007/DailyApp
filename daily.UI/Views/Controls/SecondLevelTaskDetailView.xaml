@@ -18,17 +18,7 @@
     </UserControl.Resources>
 
     <DockPanel>
-
-        <Button DockPanel.Dock="Left"
-                FontFamily="Segoe MDL2 Assets" Content="&#xE710;" 
-                Padding="10,0,10,0">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="PreviewMouseUp" >
-                    <i:InvokeCommandAction Command="{Binding OnButtonClickAddTask}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Button>
-        <DockPanel DockPanel.Dock="Top">
+        <DockPanel DockPanel.Dock="Top" Margin="35,0,0,0">
 
             <WrapPanel DockPanel.Dock="Left"
                     Margin="0,2,0,0">
@@ -69,10 +59,19 @@
                   Height="Auto" 
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 
-                  Margin="20,2,0,0"
-                  BorderThickness="0" 
-                  Background="Transparent"></TextBox>
+                  MinWidth="100"
+                  BorderThickness="0,0,1,1" Background="White" />
         </DockPanel>
+        <Button DockPanel.Dock="Left"
+                FontFamily="Segoe MDL2 Assets" Content="&#xE710;" 
+                Padding="10,0,10,0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseUp" >
+                    <i:InvokeCommandAction Command="{Binding OnButtonClickAddTask}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+
         <WrapPanel Name="Container"
                     Orientation="Vertical" 
                     Margin="0,2,0,2"

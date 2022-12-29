@@ -18,19 +18,10 @@
     </UserControl.Resources>
 
     <ScrollViewer Padding="20,20,20,20">
-        <DockPanel>
-            <Button DockPanel.Dock="Left"
-                FontFamily="Segoe MDL2 Assets" Content="&#xE710;" 
-                Padding="10,0,10,0">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseUp" >
-                        <i:InvokeCommandAction Command="{Binding OnButtonClickAddTask}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
+        <DockPanel>           
             <DockPanel DockPanel.Dock="Top">
                 <WrapPanel DockPanel.Dock="Left"
-                    Margin="34,2,0,0">
+                    Margin="50,2,0,20">
                     <TextBlock 
                 Text="{Binding Timming , Converter={StaticResource TimeSpanConverter}}" 
                 Padding="10,0,10,0"></TextBlock>
@@ -66,10 +57,19 @@
                   TextWrapping="Wrap" 
                   Margin="10,2,0,0"></TextBlock>
             </DockPanel>
+            <Button DockPanel.Dock="Left"
+                FontFamily="Segoe MDL2 Assets" Content="&#xE710;">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseUp" >
+                        <i:InvokeCommandAction Command="{Binding OnButtonClickAddTask}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+
 
             <WrapPanel Name="Container"
                     Orientation="Vertical" 
-                    Margin="0,2,0,2"
+                    Margin="0,0,0,0"
                     DockPanel.Dock="Bottom"/>
 
         </DockPanel>
