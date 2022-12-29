@@ -61,7 +61,6 @@
                   FontSize="13"
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 
-                  MinWidth="100"
                   BorderThickness="25,0,1,1"
                   Background="White"
                   BorderBrush="#d0d0d0"></TextBox>

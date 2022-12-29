@@ -57,7 +57,7 @@
             <TextBox  DockPanel.Dock="Right"
                   Text="{Binding Description, Mode=TwoWay}" 
                   Padding="5,5,5,5"
-                  Margin ="28,0,10,0"
+                  Margin ="28,0,0,0"
                   Height="Auto" 
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 
