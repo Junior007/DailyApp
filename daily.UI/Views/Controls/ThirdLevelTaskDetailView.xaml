@@ -63,7 +63,8 @@
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 
                   MinWidth="100"
-                  BorderThickness="0,0,1,1"></TextBox>
+                  BorderThickness="0,0,1,1"
+                  BorderBrush="#d0d0d0"></TextBox>
     </DockPanel>
 
 </UserControl>
