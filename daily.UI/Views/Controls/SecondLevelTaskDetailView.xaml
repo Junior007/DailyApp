@@ -18,14 +18,15 @@
     </UserControl.Resources>
 
     <DockPanel>
-        <DockPanel DockPanel.Dock="Top" Margin="35,0,0,0">
+        <DockPanel DockPanel.Dock="Top" Margin="10,20,0,0">
 
             <WrapPanel DockPanel.Dock="Left"
-                    Margin="0,2,0,0">
+                    Margin="23,2,0,0">
 
                 <TextBlock 
                 Text="{Binding Timming , Converter={StaticResource TimeSpanConverter}}" 
-                Padding="10,0,10,0"></TextBlock>
+                Padding="10,0,10,0"
+                FontSize="15"></TextBlock>
 
                 <Button 
                 FontFamily="Segoe MDL2 Assets" 
@@ -56,11 +57,13 @@
             <TextBox  DockPanel.Dock="Right"
                   Text="{Binding Description, Mode=TwoWay}" 
                   Padding="5,5,5,5"
+                  Margin ="27,0,0,0 "
                   Height="Auto" 
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 
-                  MinWidth="100"
-                  BorderThickness="0,0,1,1" Background="White" />
+                  BorderThickness="0,0,1,1" 
+                  FontSize="13"
+                  Background="White" />
         </DockPanel>
         <Button DockPanel.Dock="Left"
                 FontFamily="Segoe MDL2 Assets" Content="&#xE710;" 

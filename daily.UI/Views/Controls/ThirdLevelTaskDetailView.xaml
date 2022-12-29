@@ -21,7 +21,8 @@
         <WrapPanel DockPanel.Dock="Left">
             <TextBlock 
                 Text="{Binding Timming , Converter={StaticResource TimeSpanConverter}}" 
-                Padding="10,0,10,0"></TextBlock>
+                Padding="10,0,10,0"
+                FontSize="15"></TextBlock>
 
 
             <Button 
@@ -55,7 +56,9 @@
         <TextBox  DockPanel.Dock="Right"
                   Text="{Binding Description, Mode=TwoWay}"
                   Padding="5,5,5,5"
+                  Margin="27,0,0,0"
                   Height="Auto" 
+                  FontSize="13"
                   Background="Transparent"
                   AcceptsReturn="True" 
                   TextWrapping="Wrap" 

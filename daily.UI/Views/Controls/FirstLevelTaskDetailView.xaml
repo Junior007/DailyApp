@@ -18,13 +18,15 @@
     </UserControl.Resources>
 
     <ScrollViewer Padding="20,20,20,20">
-        <DockPanel>           
+        <DockPanel>
             <DockPanel DockPanel.Dock="Top">
                 <WrapPanel DockPanel.Dock="Left"
-                    Margin="50,2,0,20">
+                    Margin="0,2,0,20">
                     <TextBlock 
                 Text="{Binding Timming , Converter={StaticResource TimeSpanConverter}}" 
-                Padding="10,0,10,0"></TextBlock>
+                Padding="10,0,10,0"
+                FontSize="15"></TextBlock>
+
                     <Button 
                 FontFamily="Segoe MDL2 Assets" 
                 Content="{Binding IsRunning, Converter={StaticResource IsRunningToIconConverter}}" 
@@ -55,9 +57,11 @@
                   Text="{Binding Description, Mode=TwoWay}" 
                   Height="Auto" 
                   TextWrapping="Wrap" 
-                  Margin="10,2,0,0"></TextBlock>
+                  Margin="10,2,0,0"
+                  FontSize="15"></TextBlock>
             </DockPanel>
             <Button DockPanel.Dock="Left"
+                    Padding="10,0,10,0"
                 FontFamily="Segoe MDL2 Assets" Content="&#xE710;">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseUp" >
