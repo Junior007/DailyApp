@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         Title="Daily Tasks" 
         d:DesignHeight="800" d:DesignWidth="800"
-        Background="CadetBlue">
+        Background="#B0BFC8">
 
     <Window.Resources>
         <converters:IsRunningToIconConverter x:Key="IsRunningToIconConverter" />
@@ -19,8 +19,7 @@
         <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
     </Window.Resources>
 
-    <TabControl Name="NavBar" 
-                DockPanel.Dock="Top">
+    <TabControl Name="NavBar" Background="#B0BFC8">
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="SelectionChanged" >
                 <i:InvokeCommandAction Command="{Binding OnSelectionChanged}" />
