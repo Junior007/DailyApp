@@ -17,7 +17,7 @@ namespace daily.UI.ViewsModel
 
         protected override void RefreshSubtasksViews()
         {
-            stackPanelContainer = this.OwnerView?.FindName(Container) as StackPanel;
+            stackPanelContainer = this.OwnerView?.FindName(Container) as WrapPanel;
             stackPanelContainer?.Children.Clear();
 
             if (SubTasks?.Count > 0)

@@ -19,8 +19,7 @@
         <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
     </Window.Resources>
 
-    <TabControl Name="NavBar" 
-                DockPanel.Dock="Top">
+    <TabControl Name="NavBar">
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="SelectionChanged" >
                 <i:InvokeCommandAction Command="{Binding OnSelectionChanged}" />

@@ -96,7 +96,7 @@ namespace daily.UI.ViewsModel
         protected TimeSpan _timming = DateTime.Now - DateTime.Now;
 
         protected IDailyServices _dailyService;
-        protected StackPanel stackPanelContainer;
+        protected WrapPanel stackPanelContainer;
         protected string Container = nameof(Container);
         protected ICommand startStop;
         protected ICommand onButtonClickAddTask;
@@ -184,7 +184,7 @@ namespace daily.UI.ViewsModel
             IsRunning = _dailyTask.IsRunning;
         }
 
-        protected abstract void RefreshSubtasksViews();
+        protected virtual void RefreshSubtasksViews() { }
 
         protected void setTimming()
         {//TODO -  pensar en timmer único en la vista principal

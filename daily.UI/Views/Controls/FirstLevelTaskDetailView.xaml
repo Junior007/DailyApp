@@ -17,81 +17,68 @@
         <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
     </UserControl.Resources>
 
-    <Grid  Width="Auto"                 
-           HorizontalAlignment="Stretch"
-           >
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="20"></RowDefinition>
-            <RowDefinition Height="Auto" MinHeight="0"></RowDefinition>
-        </Grid.RowDefinitions>
-
-        <StackPanel Orientation="Horizontal" 
-                    Grid.Row="0" 
-                    Grid.Column="0"
+    <ScrollViewer Margin="10,10,10,10">
+        <DockPanel>
+            <DockPanel DockPanel.Dock="Top">
+                <WrapPanel Orientation="Horizontal" 
+                    DockPanel.Dock="Left"
                     Margin="0,2,0,0"
                     Width="Auto">
 
-            <TextBlock 
+                    <TextBlock 
                 Text="{Binding Timming , Converter={StaticResource TimeSpanConverter}}" 
                 Padding="10,0,10,0"></TextBlock>
 
-            <Button 
+                    <Button 
                 FontFamily="Segoe MDL2 Assets" 
                 Content="{Binding IsRunning, Converter={StaticResource IsRunningToIconConverter}}" 
                 Padding="10,0,10,0"
                 Height="20"
                 VerticalAlignment="Top"
                 Background="{Binding IsRunning, Converter={StaticResource IsRunningToBackgroundConverter}}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseUp" >
-                        <i:InvokeCommandAction Command="{Binding StartStop}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseUp" >
+                                <i:InvokeCommandAction Command="{Binding StartStop}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
 
-            <Button 
+                    <Button 
                 FontFamily="Segoe MDL2 Assets" Content="&#xE710;" 
                 Padding="10,0,10,0"
                 Height="20"
                 VerticalAlignment="Top">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseUp" >
-                        <i:InvokeCommandAction Command="{Binding OnButtonClickAddTask}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseUp" >
+                                <i:InvokeCommandAction Command="{Binding OnButtonClickAddTask}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
 
-            <Button 
+                    <Button 
                 FontFamily="Segoe MDL2 Assets" Content="&#xE74E;" 
                 Padding="10,0,10,0"
                 Height="20"
                 VerticalAlignment="Top">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseUp" >
-                        <i:InvokeCommandAction Command="{Binding OnButtonClickSave}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-        </StackPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseUp" >
+                                <i:InvokeCommandAction Command="{Binding OnButtonClickSave}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </WrapPanel>
 
-        <TextBlock  Grid.Row="0" 
-                  Grid.Column="1"
+                <TextBlock  DockPanel.Dock="Right"
                   Text="{Binding Description, Mode=TwoWay}" 
                   Height="Auto" 
                   TextWrapping="Wrap" 
                   Margin="0,2,0,0"></TextBlock>
-
-        <StackPanel Name="Container"
+            </DockPanel>
+            <WrapPanel Name="Container"
                     Orientation="Vertical" 
                     Margin="0,2,0,2"
-                    Grid.Row="1" 
-                    Grid.ColumnSpan="2"/>
+                    DockPanel.Dock="Bottom"/>
 
-    </Grid>
+        </DockPanel>
+    </ScrollViewer>
 </UserControl>
